@@ -1,0 +1,3 @@
+[date: Wed Apr 28 2021, hours: 14, minutes: 27, seconds: 40] Error: connect ECONNREFUSED 127.0.0.1:5434
+[date: Wed Apr 28 2021, hours: 14, minutes: 29, seconds: 1] RangeError: Variable $3 out of range. Parameters array length: 2
+[date: Wed Apr 28 2021, hours: 14, minutes: 59, seconds: 5] JsonWebTokenError: jwt must be provided
