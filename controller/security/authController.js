@@ -6,6 +6,11 @@ const logger = require('../../service/logService');
 const jwt = require('jsonwebtoken');
 const config = require('../../config');
 
+const roles = {
+    USER: 'user',
+    ADMIN: 'admin'
+}
+
 async function register(req, res) {
     if (!validService.isValidPhoneNumber(req.body.login)) {
         res.status(406);
@@ -21,13 +26,13 @@ async function register(req, res) {
     if (await userRepository.smsCodeVerify(req.body.smsCode, req.body.login)) {
         let id = 0;
         try {
-            id = await userRepository.register(req.body);
+            id = await userRepository.register(req.body.name, req.body.login, roles.USER);
         } catch (err) {
             logger.log(err);
             console.log(err);
         }
         if (id > 0) {
-            const token = jwt.sign({id: id}, config.jwtApiAccessToken);
+            const token = jwt.sign({id: id, role: roles.USER}, config.jwtApiAccessToken);
             res.json({token: token});
             return;
         } else {
@@ -48,14 +53,16 @@ async function login(req, res) {
     }
     if (await userRepository.smsCodeVerify(req.body.smsCode, req.body.login)) {
         let id = 0;
+        let user;
         try {
-            id = (await userRepository.getUserByLogin(req.body.login)).id;
+            user = await userRepository.getUserByLogin(req.body.login);
+            id = user.id;
         } catch (err) {
             logger.log(err);
             console.log(err);
         }
         if (id > 0) {
-            const token = jwt.sign({id: id}, config.jwtApiAccessToken);
+            const token = jwt.sign({id: id, role: user.role}, config.jwtApiAccessToken);
             res.json({token: token});
             return;
         } else {
@@ -95,10 +102,6 @@ function generateCode() {
         code = code + Math.round(Math.random() * (high - low) + low);
     }
     return code;
-}
-
-async function changeNumber(req, res) {
-
 }
 
 module.exports = function (app) {

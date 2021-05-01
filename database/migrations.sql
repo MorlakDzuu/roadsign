@@ -3,6 +3,7 @@ CREATE TABLE users
     id serial NOT NULL,
     name character varying NOT NULL,
     phone_number character varying UNIQUE NOT NULL,
+    role character varying NOT NULL,
     PRIMARY KEY (id)
 );
 

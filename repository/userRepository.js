@@ -1,9 +1,9 @@
 const database = require('../database/database');
 
-async function register(client) {
-    const data = await database.db.one('INSERT INTO users (name, phone_number) ' +
-        'VALUES ($1, $2) RETURNING id',
-        [client.name, client.login]);
+async function register(name, login, role) {
+    const data = await database.db.one('INSERT INTO users (name, phone_number, role) ' +
+        'VALUES ($1, $2, $3) RETURNING id',
+        [name, login, role]);
     return data.id;
 }
 
@@ -36,6 +36,7 @@ async function smsCodeVerify(code, login) {
 module.exports = {
     register,
     getUserByLogin,
+    getUserById,
     updateUserName,
     saveSmsCode,
     smsCodeVerify

@@ -1,3 +1,7 @@
 [date: Wed Apr 28 2021, hours: 14, minutes: 27, seconds: 40] Error: connect ECONNREFUSED 127.0.0.1:5434
 [date: Wed Apr 28 2021, hours: 14, minutes: 29, seconds: 1] RangeError: Variable $3 out of range. Parameters array length: 2
 [date: Wed Apr 28 2021, hours: 14, minutes: 59, seconds: 5] JsonWebTokenError: jwt must be provided
+[date: Sat May 01 2021, hours: 23, minutes: 51, seconds: 38] error: INSERT has more expressions than target columns
+[date: Sat May 01 2021, hours: 23, minutes: 52, seconds: 41] error: INSERT has more expressions than target columns
+[date: Sat May 01 2021, hours: 23, minutes: 53, seconds: 27] error: INSERT has more expressions than target columns
+[date: Sat May 01 2021, hours: 23, minutes: 55, seconds: 3] JsonWebTokenError: jwt must be provided
