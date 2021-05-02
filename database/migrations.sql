@@ -12,3 +12,14 @@ CREATE TABLE sms_auth_data (
     sms_code character varying,
     sms_expired_time TIMESTAMP
 );
+
+CREATE TABLE signs
+(
+    id serial NOT NULL,
+    coordinates character varying,
+    name character varying NOT NULL,
+    user_id integer NOT NULL,
+    photo character varying NOT NULL,
+    address character varying NOT NULL,
+    PRIMARY KEY (id)
+);

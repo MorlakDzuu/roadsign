@@ -5,7 +5,8 @@ const authenticator = require('./security/authenticator');
 const jwt = require('jsonwebtoken');
 
 async function changeName(req, res) {
-    let user = await userRepository.getUserByLogin(req.body.login);
+    let userId = jwt.decode(req.headers.authorization).id;
+    let user = await userRepository.getUserById(userId);
     try {
         await userRepository.updateUserName(user.id, req.body.name);
     } catch (err) {
