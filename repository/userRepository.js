@@ -43,7 +43,7 @@ async function smsCodeVerify(code, login) {
 }
 
 async function deleteUser(login) {
-    await database.db.none('DELETE * FROM users WHERE phone_number = $1', [login]);
+    await database.db.none('DELETE FROM users WHERE phone_number = $1', [login]);
 }
 
 module.exports = {
