@@ -109,6 +109,8 @@ async function deleteUser(req, res) {
         await userRepository.deleteUser(req.body.login);
     } catch (err) {
         res.status(500);
+        console.log(err);
+        logger.log(err.message);
         res.json({message: "can't delete this user"});
         return;
     }
