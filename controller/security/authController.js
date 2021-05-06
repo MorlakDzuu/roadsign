@@ -26,7 +26,7 @@ async function register(req, res) {
     if (await userRepository.smsCodeVerify(req.body.smsCode, req.body.login)) {
         let id = 0;
         try {
-            id = await userRepository.register(req.body.name, req.body.login, roles.USER);
+            id = await userRepository.register(req.body.name, req.body.login, "user");
         } catch (err) {
             logger.log(err);
             console.log(err);
