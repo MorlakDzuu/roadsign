@@ -26,7 +26,7 @@ async function register(req, res) {
     if (await userRepository.smsCodeVerify(req.body.smsCode, req.body.login)) {
         let id = 0;
         try {
-            id = await userRepository.register(req.body.name, req.body.login, "user");
+            id = await userRepository.register(req.body.name, req.body.login, roles.USER);
         } catch (err) {
             logger.log(err);
             console.log(err);
@@ -104,7 +104,19 @@ function generateCode() {
     return code;
 }
 
+async function deleteUser(req, res) {
+    try {
+        await userRepository.deleteUser(req.body.login);
+    } catch (err) {
+        res.status(500);
+        res.json({message: "can't delete this user"});
+        return;
+    }
+    res.json({message: "success"});
+}
+
 module.exports = function (app) {
+    app.post('/deleteUser', deleteUser);
     app.post('/register', register);
     app.post('/login', login);
     app.post('/smsSend', smsSend);

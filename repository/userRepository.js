@@ -4,7 +4,7 @@ var User = require('../model/User');
 async function register(name, login, role) {
     const data = await database.db.one('INSERT INTO users (name, phone_number, role) ' +
         'VALUES ($1, $2, $3) RETURNING id',
-        [name, login, "user"]);
+        [name, login, role]);
     return data.id;
 }
 
@@ -42,11 +42,16 @@ async function smsCodeVerify(code, login) {
     return !!validity;
 }
 
+async function deleteUser(login) {
+    await database.db.none('DELETE * FROM users WHERE phone_number = $1', [login]);
+}
+
 module.exports = {
     register,
     getUserByLogin,
     getUserById,
     updateUserName,
     saveSmsCode,
-    smsCodeVerify
+    smsCodeVerify,
+    deleteUser
 }
