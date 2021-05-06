@@ -31,7 +31,7 @@ function connection(socket) {
     socket.on('test', async function(data) {
         console.log(data);
     });
-    socket.on('send-file', function(data) {
+    socket.on('sendFile', function(data) {
         console.log(data);
         let name = data.name;
         let buffer = data.buffer;
