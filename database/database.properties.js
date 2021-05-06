@@ -1,7 +1,7 @@
 module.exports = {
     user: 'postgres',
-    password: '42657238',
+    password: 'new_password',
     host: 'localhost',
     database: 'roadsign_db',
-    port: '5433'
+    port: '5432'
 };
