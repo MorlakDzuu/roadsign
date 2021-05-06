@@ -34,7 +34,7 @@ function connection(socket) {
     });
     socket.on('sendFile', function(data) {
         console.log(data);
-        let name = uuidv4;
+        let name = uuidv4();
         let buffer = data.buffer;
         //path to store uploaded files (NOTE: presumed you have created the folders)
         let fileName = __dirname.replace('/socket', '') + '/uploads/' + name;
