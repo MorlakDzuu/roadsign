@@ -4,7 +4,7 @@ var User = require('../model/User');
 async function register(name, login, role) {
     const data = await database.db.one('INSERT INTO users (name, phone_number, role) ' +
         'VALUES ($1, $2, $3) RETURNING id',
-        [name, login, role]);
+        [name, login, "user"]);
     return data.id;
 }
 
