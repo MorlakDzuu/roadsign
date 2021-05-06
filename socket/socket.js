@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+import { v4 as uuidv4 } from 'uuid';
 const config = require('../config');
 const logger = require('../service/logService');
 const fs = require('fs');
@@ -33,7 +34,7 @@ function connection(socket) {
     });
     socket.on('sendFile', function(data) {
         console.log(data);
-        let name = data.name;
+        let name = uuidv4;
         let buffer = data.buffer;
         //path to store uploaded files (NOTE: presumed you have created the folders)
         let fileName = __dirname.replace('/socket', '') + '/uploads/' + name;
