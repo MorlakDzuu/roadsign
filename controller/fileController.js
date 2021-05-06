@@ -16,7 +16,7 @@ const storageConfig = multer.diskStorage({
 });
 const upload = multer({storage: storageConfig});
 
-async function getContractFile(req, res) {
+async function saveImageInfo(req, res) {
     let coordinates = req.body.coordinates;
     let address = req.body.address;
     let userId = jwt.decode(req.headers.authorization).id;
@@ -34,5 +34,5 @@ async function getContractFile(req, res) {
 
 module.exports = function (app) {
     app.use('/file', authenticator.apiAuthenticateJWT);
-    app.post('/file/upload', upload.single("filedata"), getContractFile);
+    app.post('/file/upload', upload.single("filedata"), saveImageInfo);
 }

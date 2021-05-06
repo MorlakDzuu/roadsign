@@ -11,4 +11,3 @@ async function addSign(sign) {
 module.exports = {
     addSign
 };
-

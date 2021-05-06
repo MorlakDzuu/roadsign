@@ -23,3 +23,15 @@ CREATE TABLE signs
     address character varying NOT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE confirmed_signs
+(
+    id serial NOT NULL,
+    "sign_id" integer NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY ("sign_id")
+        REFERENCES public.signs (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+        NOT VALID
+);
