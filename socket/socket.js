@@ -2,7 +2,9 @@ const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 const config = require('../config');
 const logger = require('../service/logService');
+const signService = require('../service/signService');
 const fs = require('fs');
+const UnknownSign = require("../model/UnknownSign");
 
 
 function verify(socket, next) {
@@ -17,9 +19,9 @@ function verify(socket, next) {
 }
 
 function connection(socket) {
-    //let token = socket.handshake.query.token;
-    //let userId = jwt.decode(token).id;
-    //socket.username = userId;
+    let token = socket.handshake.query.token;
+    let userId = jwt.decode(token).id;
+    socket.username = userId;
     global.connections.push(socket);
     socket.on('NodeJS Server Port', function(data) {
         console.log('recieved data: ' + data);
@@ -32,14 +34,16 @@ function connection(socket) {
     socket.on('test', async function(data) {
         console.log(data);
     });
-    socket.on('sendFile', function(data) {
+    socket.on('sendFile', async function(data) {
         console.log(data);
-        let name = uuidv4() + ".png";
+        let name = uuidv4() + ".jpeg";
         let buffer = data.buffer;
-        //path to store uploaded files (NOTE: presumed you have created the folders)
-        let fileName = __dirname.replace('/socket', '') + '/uploads/' + name;
+        let coordinates = data.coordinates;
+        let direction = data.direction;
 
-        fs.open(fileName, 'a', 0o755, function(err, fd) {
+        let path = __dirname.replace('/socket', '') + '/uploads/' + name;
+
+        fs.open(path, 'a', 0o755, function(err, fd) {
             if (err) throw err;
 
             fs.write(fd, buffer, null, 'Binary', function(err, written, buff) {
@@ -48,11 +52,14 @@ function connection(socket) {
                 });
             })
         });
+        let unknownSign = new UnknownSign(coordinates, userId, name, "", direction);
+        await signService.addSign(unknownSign);
     });
 }
 
 function init() {
-    io.on('connection', connection);
+    io.use(verify)
+        .on('connection', connection);
 }
 
 module.exports = {

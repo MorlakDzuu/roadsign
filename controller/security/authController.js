@@ -118,7 +118,7 @@ async function deleteUser(req, res) {
 }
 
 async function getPhoto(req, res) {
-    let path = __dirname.replace("controller/security", "uploads/") + "40d5d255-544a-4365-9fc2-a5aa85c363bf.png";
+    let path = __dirname.replace("controller/security", "uploads/") + "b52e2257-181f-4faf-a298-70466feb68ec.png";
     res.download(path, 'test');
 }
 

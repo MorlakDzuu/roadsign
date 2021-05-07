@@ -7,16 +7,17 @@ class Sign extends UnknownSign {
         this.name = name;
     };
 
-    static init(id, coordinates, name, user_id, photo, address) {
+    static init(id, coordinates, name, user_id, photo, address, direction) {
         let sign = new Sign(id, coordinates, name, user_id, photo, address);
         this.id = id;
         this.name = name;
+        this.direction = direction;
         return sign;
     }
 
     static initWithUnknownSign(unknownSign, id, name) {
         let sign = new Sign(id, unknownSign.coordinates, name,
-            unknownSign.user_id, unknownSign.photo, unknownSign.address);
+            unknownSign.user_id, unknownSign.photo, unknownSign.address, unknownSign.direction);
         return sign;
     }
 
