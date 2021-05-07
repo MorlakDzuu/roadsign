@@ -1,8 +1,8 @@
 const database = require('../database/database');
 
-async function confirmSignById(signId, name) {
-    await database.db.none('INSERT INTO confirmed_signs (sign_id, name) ' +
-        'VALUES ($1, $2)', [signId, name]);
+async function confirmSignById(signId) {
+    await database.db.none('INSERT INTO confirmed_signs (sign_id) ' +
+        'VALUES ($1, $2)', [signId]);
 }
 
 async function editSign(sign) {

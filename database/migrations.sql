@@ -18,6 +18,7 @@ CREATE TABLE signs
     id serial NOT NULL,
     coordinates character varying,
     user_id integer NOT NULL,
+    name character varying NOT NULL,
     photo character varying NOT NULL,
     address character varying NOT NULL,
     direction integer NOT NULL,
@@ -28,7 +29,6 @@ CREATE TABLE confirmed_signs
 (
     id serial NOT NULL,
     "sign_id" integer NOT NULL,
-    name character varying NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY ("sign_id")
         REFERENCES public.signs (id) MATCH SIMPLE
