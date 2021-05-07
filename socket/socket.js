@@ -8,6 +8,7 @@ const fs = require('fs');
 const UnknownSign = require("../model/UnknownSign");
 
 function verify(socket, next) {
+    console.log(socket.handshake);
     let token = socket.handshake.query.token;
     jwt.verify(token, config.jwtApiAccessToken, (error, user) => {
         if (error) {
