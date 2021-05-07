@@ -14,8 +14,13 @@ async function deleteSign(signId) {
     await database.db.none('DELETE * FROM confirmed_signs WHERE sign_id = $1', [signId]);
 }
 
+async function getSigns(radius, coordinate, filter) {
+    //TODO
+}
+
 module.exports = {
     confirmSignById,
     editSign,
-    deleteSign
+    deleteSign,
+    getSigns
 }

@@ -3,9 +3,9 @@ const { v4: uuidv4 } = require('uuid');
 const config = require('../config');
 const logger = require('../service/logService');
 const signService = require('../service/signService');
+const confirmedSignRepository = require('../service/confirmedSignRepository');
 const fs = require('fs');
 const UnknownSign = require("../model/UnknownSign");
-
 
 function verify(socket, next) {
     let token = socket.handshake.query.token;
@@ -18,24 +18,30 @@ function verify(socket, next) {
     });
 }
 
+function sendNotificationData(data, userId, key) {
+    let socketId;
+    global.connections.forEach(socket => {
+        if (socket.username == userId) {
+            socketId = socket.id;
+        }
+    });
+    if (socketId) {
+        io.to(socketId).emit(key, data);
+    }
+}
+
 function connection(socket) {
     let token = socket.handshake.query.token;
     let userId = jwt.decode(token).id;
     socket.username = userId;
     global.connections.push(socket);
-    socket.on('NodeJS Server Port', function(data) {
-        console.log('recieved data: ' + data);
-        io.sockets.emit('IOS Client Port', {msg: 'Hi iOS Client!'});
-    });
+
     socket.on('disconnect', function(data) {
         global.connections.splice(connections.indexOf(socket), 1);
         console.log('Socket disconnected: ' + socket);
     });
-    socket.on('test', async function(data) {
-        console.log(data);
-    });
+
     socket.on('sendFile', async function(data) {
-        console.log(data);
         let name = uuidv4() + ".jpeg";
         let buffer = data.buffer;
         let coordinates = data.coordinates;
@@ -54,6 +60,14 @@ function connection(socket) {
         });
         let unknownSign = new UnknownSign(coordinates, userId, name, "", direction);
         await signService.addSign(unknownSign);
+    });
+
+    socket.on('getSigns', async function(data) {
+        let signs = await confirmedSignRepository.getSigns(data.radius, data.coordinate, data.filter);
+        let jsonSigns = {
+            signs: signs
+        };
+        sendNotificationData(jsonSigns, userId, 'signs');
     });
 }
 
