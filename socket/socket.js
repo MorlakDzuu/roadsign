@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const config = require('../config');
 const logger = require('../service/logService');
 const signService = require('../service/signService');
-const confirmedSignRepository = require('../service/confirmedSignRepository');
+const confirmedSignRepository = require('../repository/confirmedSignRepository');
 const fs = require('fs');
 const UnknownSign = require("../model/UnknownSign");
 
