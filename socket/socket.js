@@ -64,7 +64,7 @@ function connection(socket) {
     });
 
     socket.on('getSigns', async function(data) {
-        let signs = await confirmedSignRepository.getSigns(data.radius, data.coordinate, data.filter);
+        let signs = await confirmedSignRepository.getSigns(data.radius, data.lat, data.lon, data.filter);
         let jsonSigns = {
             signs: signs
         };

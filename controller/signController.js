@@ -19,7 +19,8 @@ const upload = multer({storage: storageConfig});
 
 async function addSign(req, res) {
     let userId = jwt.decode(req.headers.authorization).id;
-    let coordinates = req.body.coordinates;
+    let lat = req.body.lat;
+    let lon = req.body.lon;
     let address = req.body.address;
     let name = req.body.name;
     let filedata = req.file;
@@ -28,7 +29,7 @@ async function addSign(req, res) {
         res.json({error: "Exception while working with file"});
     }
     let photo = __dirname.replace("controller", "uploads/") + filedata.filename;
-    let sign = new Sign(0, coordinates, name, userId, photo, address);
+    let sign = new Sign(0, lat, lon, name, userId, photo, address);
     try {
         let signId = await signRepository.addSign(sign);
         await confirmedSignRepository.confirmSignById(signId);

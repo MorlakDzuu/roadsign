@@ -16,7 +16,8 @@ CREATE TABLE sms_auth_data (
 CREATE TABLE signs
 (
     id serial NOT NULL,
-    coordinates character varying,
+    lat float NOT NULL,
+    lon float NOT NULL,
     user_id integer NOT NULL,
     name character varying NOT NULL,
     photo character varying NOT NULL,
