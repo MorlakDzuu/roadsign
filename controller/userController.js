@@ -1,6 +1,7 @@
 const userRepository = require('../repository/userRepository');
 const logger = require('../service/logService');
 const authenticator = require('./security/authenticator');
+const confirmedSignRepository = require('../repository/confirmedSignRepository');
 
 const jwt = require('jsonwebtoken');
 
@@ -22,10 +23,12 @@ async function getProfile(req, res) {
     let userId = jwt.decode(req.headers.authorization).id;
     try {
         let user = await userRepository.getUserById(userId);
+        let signsCount = await confirmedSignRepository.getSignsCountByUserId(userId);
         res.json({
             phone: user.phone_number,
             name: user.name,
-            role: user.role
+            role: user.role,
+            signsCount: signsCount
         });
         return
     } catch (err) {
