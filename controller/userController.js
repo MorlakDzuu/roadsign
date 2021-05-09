@@ -25,6 +25,7 @@ async function getProfile(req, res) {
         let user = await userRepository.getUserById(userId);
         let signsCount = await confirmedSignRepository.getSignsCountByUserId(userId);
         res.json({
+            id: user.id,
             phone: user.phone_number,
             name: user.name,
             role: user.role,
