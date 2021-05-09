@@ -58,24 +58,24 @@ async function getSignsCluster(radius, lat, lon, filter) {
     if (cluster4Size > MAX_SIGNS_COUNT) {
         cluster4 = null;
     }
-    return {
-        cluster1: {
-            size: cluster1Size,
-            signs: cluster1
-        },
-        cluster2: {
-            size: cluster2Size,
-            signs: cluster2
-        },
-        cluster3: {
-            size: cluster3Size,
-            signs: cluster3
-        },
-        cluster4: {
-            size: cluster4Size,
-            signs: cluster4
-        }
-    };
+    let signsArray = [];
+    signsArray.push({
+        size: cluster1Size,
+        signs: cluster1
+    });
+    signsArray.push({
+        size: cluster2Size,
+        signs: cluster2
+    });
+    signsArray.push({
+        size: cluster3Size,
+        signs: cluster3
+    });
+    signsArray.push({
+        size: cluster4Size,
+        signs: cluster4
+    });
+    return signsArray;
 }
 
 module.exports = {
