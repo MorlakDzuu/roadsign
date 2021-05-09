@@ -1,4 +1,4 @@
-import Sign from "./model/Sign";
+const Sign =  require("./model/Sign");
 
 const bodyParser = require('body-parser');
 import randomFloat from 'random-float';
