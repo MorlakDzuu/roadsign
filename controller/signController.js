@@ -53,7 +53,18 @@ async function confirmSign(req, res) {
     res.json({message: 'success'});
 }
 
+async function getSigns(req, res) {
+    try {
+        let signs = await confirmedSignRepository.getSigns(1000, 55.759003, 37.622381, null);
+        res.json({message: signs});
+    } catch (err) {
+        res.status(500);
+        return;
+    }
+}
+
 module.exports = function (app) {
+    app.get('/getSigns', getSigns);
     app.use('/sign', authenticator.apiAuthenticateAdminJWT);
     app.post('/sign/addSign', upload.single("filedata"), addSign);
     app.post('/sign/confirmSign', confirmSign);
