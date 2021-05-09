@@ -32,7 +32,14 @@ async function saveImageInfo(req, res) {
     res.json({sign: sign});
 }
 
+async function getFile(req, res) {
+    let fileName = req.params.uuid + '.jpeg';
+    let path = __dirname.replace("controller", "uploads/") + fileName;
+    res.download(path, fileName);
+}
+
 module.exports = function (app) {
     app.use('/file', authenticator.apiAuthenticateJWT);
     app.post('/file/upload', upload.single("filedata"), saveImageInfo);
+    app.get('/file/getFile/:uuid', getFile);
 }

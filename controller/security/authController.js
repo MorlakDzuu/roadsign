@@ -117,14 +117,7 @@ async function deleteUser(req, res) {
     res.json({message: "success"});
 }
 
-async function getPhoto(req, res) {
-    let path = __dirname.replace("controller/security", "uploads/") + "b52e2257-181f-4faf-a298-70466feb68ec.png";
-    res.download(path, 'test');
-}
-
 module.exports = function (app) {
-    app.get('/getPhoto', getPhoto);
-
     app.post('/deleteUser', deleteUser);
     app.post('/register', register);
     app.post('/login', login);

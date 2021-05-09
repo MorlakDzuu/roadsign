@@ -11,6 +11,16 @@ async function addSign(unknownSign) {
     return sign;
 }
 
+function getSignModel(sign) {
+    return {
+        uuid: sign.photo,
+        lat: sign.lat,
+        lon: sign.lon,
+        type: sign.name,
+        correct: true
+    }
+}
+
 async function getSignsCluster(radius, lat, lon, filter) {
     let signs = await confirmedSignRepository.getSigns(radius, lat, lon, filter);
     let cluster1 = [];
@@ -20,15 +30,15 @@ async function getSignsCluster(radius, lat, lon, filter) {
     signs.forEach(sign => {
         if (sign.lat >= lat) {
             if (sign.lon >= lon) {
-                cluster2.push(sign);
+                cluster2.push(getSignModel(sign));
             } else {
-                cluster1.push(sign);
+                cluster1.push(getSignModel(sign));
             }
         } else {
             if (sign.lon >= lon) {
-                cluster4.push(sign);
+                cluster4.push(getSignModel(sign));
             } else {
-                cluster3.push(sign);
+                cluster3.push(getSignModel(sign));
             }
         }
     });
