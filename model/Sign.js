@@ -1,17 +1,16 @@
 const UnknownSign = require("./UnknownSign");
 
 class Sign extends UnknownSign {
-    constructor(id, lat, lon, name, user_id, photo, address) {
-        super(lat, lon, user_id, photo, address);
+    constructor(id, lat, lon, name, user_id, photo, address, direction) {
+        super(lat, lon, user_id, photo, address, direction);
         this.id = id;
         this.name = name;
     };
 
     static init(id, lat, lon, name, user_id, photo, address, direction) {
-        let sign = new Sign(id, lat, lon, name, user_id, photo, address);
+        let sign = new Sign(id, lat, lon, name, user_id, photo, address, direction);
         this.id = id;
         this.name = name;
-        this.direction = direction;
         return sign;
     }
 

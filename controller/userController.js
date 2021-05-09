@@ -27,7 +27,7 @@ async function initDB() {
         let lat = Math.random()*(55.913405 - 55.566060) + 55.566060;
         let lon = Math.random()*(37.859707 - 37.354691) + 37.354691;
         let type = Math.floor(Math.random() * 10);
-        let sign = new Sign(0, lat, lon, type, 12, 'test', 'test');
+        let sign = new Sign(0, lat, lon, type, 12, 'test', 'test', 0);
         let id = await signRepository.addSign(sign);
         await confirmedSignRepository.confirmSignById(id);
     }
