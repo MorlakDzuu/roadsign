@@ -1,4 +1,4 @@
-const {randomFloat} = require('random-float');
+import randomFloat from 'random-float';
 const signRepository = require('../repository/signRepository');
 const Sign =  require("../model/Sign");
 
