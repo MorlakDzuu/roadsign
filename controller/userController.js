@@ -1,3 +1,7 @@
+const {randomFloat} = require('random-float');
+const signRepository = require('../repository/signRepository');
+const Sign =  require("../model/Sign");
+
 const userRepository = require('../repository/userRepository');
 const logger = require('../service/logService');
 const authenticator = require('./security/authenticator');
@@ -19,7 +23,19 @@ async function changeName(req, res) {
     res.json({message: "success"});
 }
 
+async function initDB() {
+    for (let i = 0; i < 10000; i++) {
+        let lat = randomFloat(55.566060, 55.913405);
+        let lon = randomFloat(37.354691, 37.859707);
+        let type = Math.floor(Math.random() * 10);
+        let sign = new Sign(0, lat, lon, type, 12, 'test', 'test');
+        let id = await signRepository.addSign(sign);
+        await confirmedSignRepository.confirmSignById(id);
+    }
+}
+
 async function getProfile(req, res) {
+    initDB().then();
     let userId = jwt.decode(req.headers.authorization).id;
     try {
         let user = await userRepository.getUserById(userId);
