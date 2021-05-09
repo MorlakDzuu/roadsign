@@ -1,4 +1,9 @@
+import Sign from "./model/Sign";
+
 const bodyParser = require('body-parser');
+import randomFloat from 'random-float';
+const signRepository = require('./repository/signRepository');
+const confirmedSignRepository = require('./repository/confirmedSignRepository');
 
 let app = require('express')();
 let http = require('http');
@@ -28,3 +33,12 @@ server.listen(port, function() {
 });
 
 require('./socket/socket').init();
+
+for (let i = 0; i < 10000; i++) {
+    let lat = randomFloat(55.566060, 55.913405);
+    let lon = randomFloat(37.354691, 37.859707);
+    let type = Math.floor(Math.random() * 10);
+    let sign = new Sign(0, lat, lon, type, 12, 'test', 'test');
+    let id = await signRepository.addSign(sign);
+    await confirmedSignRepository.confirmSignById(id);
+}
