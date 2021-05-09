@@ -19,9 +19,9 @@ async function getSigns(radius, lat, lon, filter) {
 }
 
 async function getSignsCountByUserId(userId) {
-    let count = await database.db.one('SELECT COUNT(*) FROM confirmed_signs INNER JOIN signs ON ' +
+    let data = await database.db.one('SELECT COUNT(*) FROM confirmed_signs INNER JOIN signs ON ' +
         '(confirmed_signs.sign_id = signs.id) WHERE signs.user_id = $1', [userId]);
-    return count;
+    return data.count;
 }
 
 module.exports = {
