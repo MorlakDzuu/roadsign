@@ -1,7 +1,7 @@
 const Sign =  require("./model/Sign");
 
 const bodyParser = require('body-parser');
-import randomFloat from 'random-float';
+const {randomFloat} = require('random-float');
 const signRepository = require('./repository/signRepository');
 const confirmedSignRepository = require('./repository/confirmedSignRepository');
 
