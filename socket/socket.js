@@ -64,11 +64,8 @@ function connection(socket) {
     });
 
     socket.on('getSigns', async function(data) {
-        let signs = await confirmedSignRepository.getSigns(data.radius, data.lat, data.lon, data.filter);
-        let jsonSigns = {
-            signs: signs
-        };
-        sendNotificationData(jsonSigns, userId, 'signs');
+        let signs = await signService.getSignsCluster(data.radius, data.lat, data.lon, data.filter);
+        sendNotificationData(signs, userId, 'signs');
     });
 }
 

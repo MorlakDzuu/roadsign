@@ -2,6 +2,7 @@ const signRepository = require('../repository/signRepository');
 const confirmedSignRepository = require('../repository/confirmedSignRepository');
 const logger = require('../service/logService');
 const authenticator = require('./security/authenticator');
+const signService = require('../service/signService');
 
 const jwt = require('jsonwebtoken');
 const Sign = require("../model/Sign");
@@ -55,7 +56,7 @@ async function confirmSign(req, res) {
 
 async function getSigns(req, res) {
     try {
-        let signs = await confirmedSignRepository.getSigns(1000, 55.759003, 37.622381, null);
+        let signs = await signService.getSignsCluster(1000, 55.759003, 37.622381, null);
         res.json({message: signs});
     } catch (err) {
         res.status(500);
