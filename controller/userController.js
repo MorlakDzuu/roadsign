@@ -1,4 +1,3 @@
-import randomFloat from 'random-float';
 const signRepository = require('../repository/signRepository');
 const Sign =  require("../model/Sign");
 
@@ -25,8 +24,8 @@ async function changeName(req, res) {
 
 async function initDB() {
     for (let i = 0; i < 10000; i++) {
-        let lat = randomFloat(55.566060, 55.913405);
-        let lon = randomFloat(37.354691, 37.859707);
+        let lat = Math.random()*(55.913405 - 55.566060) + 55.566060;
+        let lon = Math.random()*(37.859707 - 37.354691) + 37.354691;
         let type = Math.floor(Math.random() * 10);
         let sign = new Sign(0, lat, lon, type, 12, 'test', 'test');
         let id = await signRepository.addSign(sign);
