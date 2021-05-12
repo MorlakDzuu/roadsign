@@ -65,6 +65,7 @@ function connection(socket) {
 
     socket.on('getSigns', async function(data) {
         let signs = await signService.getSignsCluster(data.radius, data.lat, data.lon, data.filter);
+        console.log(signs);
         sendNotificationData(signs[0], userId, 'cluster1');
         sendNotificationData(signs[1], userId, 'cluster2');
         sendNotificationData(signs[2], userId, 'cluster3');
