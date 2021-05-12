@@ -15,6 +15,7 @@ async function deleteSign(signId) {
 
 async function getSigns(radius, lat, lon, filter) {
     let data = await database.db.manyOrNone('SELECT * FROM signs WHERE (lat - $1)^2 + (lon - $2)^2 <= $3^2', [lat, lon, radius]);
+    console.log(data);
     return data;
 }
 
