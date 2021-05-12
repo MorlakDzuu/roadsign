@@ -18,7 +18,7 @@ function getSignModel(sign) {
         lon: sign.lon,
         type: sign.name,
         correct: true
-    }
+    };
 }
 
 async function getSignsCluster(radius, lat, lon, filter) {

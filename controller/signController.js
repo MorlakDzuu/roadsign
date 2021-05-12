@@ -56,7 +56,7 @@ async function confirmSign(req, res) {
 
 async function getSigns(req, res) {
     try {
-        let signs = await signService.getSignsCluster(1000, 55.759003, 37.622381, null);
+        let signs = await signService.getSignsCluster(100, 55.759003, 37.622381, null);
         res.json(signs);
     } catch (err) {
         res.status(500);
