@@ -28,7 +28,6 @@ async function getSignsCluster(radius, lat, lon, filter) {
     let cluster3 = [];
     let cluster4 = [];
     signs.forEach(sign => {
-        console.log(sign);
         if (sign.lat >= lat) {
             if (sign.lon >= lon) {
                 cluster2.push(getSignModel(sign));
@@ -43,6 +42,10 @@ async function getSignsCluster(radius, lat, lon, filter) {
             }
         }
     });
+    console.log(cluster1);
+    console.log(cluster2);
+    console.log(cluster3);
+    console.log(cluster4);
     let cluster1Size = cluster1.length;
     if (cluster1Size > MAX_SIGNS_COUNT) {
         cluster1 = null;
