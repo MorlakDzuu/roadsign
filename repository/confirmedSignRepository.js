@@ -22,7 +22,7 @@ async function getSigns(radius, lat, lon, filter) {
         '         * COS(RADIANS($1))\n' +
         '         * COS(RADIANS(lon - $2))\n' +
         '         + SIN(RADIANS(lat))\n' +
-        '         * SIN(RADIANS($3)))) <= ', [lat, lon, lat, radius]);
+        '         * SIN(RADIANS($3)))) <= $4', [lat, lon, lat, radius]);
     return data;
 }
 
