@@ -28,5 +28,3 @@ server.listen(port, function() {
 });
 
 require('./socket/socket').init();
-
-require("./database/generate")();
