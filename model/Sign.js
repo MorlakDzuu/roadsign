@@ -9,8 +9,6 @@ class Sign extends UnknownSign {
 
     static init(id, lat, lon, name, user_id, photo, address, direction) {
         let sign = new Sign(id, lat, lon, name, user_id, photo, address, direction);
-        this.id = id;
-        this.name = name;
         return sign;
     }
 
