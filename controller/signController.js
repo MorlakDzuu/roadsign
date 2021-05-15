@@ -61,7 +61,7 @@ async function getSigns(req, res) {
 module.exports = function (app) {
     app.get('/getSigns', getSigns);
     app.use('/sign', authenticator.apiAuthenticateAdminJWT);
-    app.post('/sign/addSign', upload.single("filedata"), addSign);
+    app.post('/sign/addSign', addSign);
     app.post('/sign/confirmSign', confirmSign);
 }
 
