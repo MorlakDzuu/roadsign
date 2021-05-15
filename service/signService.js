@@ -21,8 +21,8 @@ function getSignModel(sign) {
     };
 }
 
-async function getSignsCluster(radius, lat, lon, filter) {
-    let signs = await confirmedSignRepository.getSigns(radius, lat, lon, filter);
+async function getSignsCluster(leftDown, leftUp, rightDown, rightUp, lat, lon, filter) {
+    let signs = await confirmedSignRepository.getSigns(leftDown, leftUp, rightDown, rightUp, lat, lon, filter);
     let cluster1 = [];
     let cluster2 = [];
     let cluster3 = [];

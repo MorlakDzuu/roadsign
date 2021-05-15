@@ -13,16 +13,18 @@ async function deleteSign(signId) {
     await database.db.none('DELETE * FROM confirmed_signs WHERE sign_id = $1', [signId]);
 }
 
-async function getSigns(radius, lat, lon, filter) {
-    //let data = await database.db.manyOrNone('SELECT * FROM signs WHERE ((lat - $1)^2 + (lon - $2)^2 <= $3^2)', [lat, lon, radius]);
-   radius = radius/1000;
-    let data = await database.db.manyOrNone('SELECT * FROM signs WHERE ' +
-        '111.111 *\n' +
-        '    DEGREES(ACOS(COS(RADIANS(lat))\n' +
-        '         * COS(RADIANS($1))\n' +
-        '         * COS(RADIANS(lon - $2))\n' +
-        '         + SIN(RADIANS(lat))\n' +
-        '         * SIN(RADIANS($3)))) <= $4', [lat, lon, lat, radius]);
+async function getSigns(leftDown, leftUp, rightDown, rightUp, lat, lon, filter) {
+    /* //let data = await database.db.manyOrNone('SELECT * FROM signs WHERE ((lat - $1)^2 + (lon - $2)^2 <= $3^2)', [lat, lon, radius]);
+    //let data = await database.db.manyOrNone('SELECT * FROM signs WHERE ' +
+    //    '111.111 *\n' +
+    //    '    DEGREES(ACOS(COS(RADIANS(lat))\n' +
+    //    '         * COS(RADIANS($1))\n' +
+    //    '         * COS(RADIANS(lon - $2))\n' +
+    //    '         + SIN(RADIANS(lat))\n' +
+    //    '         * SIN(RADIANS($3)))) <= $4', [lat, lon, lat, radius]);
+     */
+    let data = await database.db.manyOrNone('SELECT * FROM signs WHERE (lat > $1) AND (lat < $2) AND (lon > $3) AND (lon < %4)',
+        [leftDown.lat, rightUp.lat, leftDown.lon, rightUp.lon]);
     return data;
 }
 
