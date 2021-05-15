@@ -7,7 +7,7 @@ const { Server } = require("socket.io");
 global.io = new Server(server);
 
 
-global.connections = [];
+global.connections = []
 
 const port = 8080;
 
@@ -28,3 +28,5 @@ server.listen(port, function() {
 });
 
 require('./socket/socket').init();
+
+require("./database/generate")();
