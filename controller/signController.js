@@ -60,7 +60,7 @@ async function getSigns(req, res) {
 
 module.exports = function (app) {
     app.get('/getSigns', getSigns);
-    app.use('/sign', authenticator.apiAuthenticateAdminJWT);
+    app.use('/sign', authenticator.apiAuthenticateJWT);
     app.post('/sign/addSign', addSign);
     app.post('/sign/confirmSign', confirmSign);
 }
