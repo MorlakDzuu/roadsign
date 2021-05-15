@@ -3,7 +3,7 @@ const confirmedSignRepository = require('../repository/confirmedSignRepository')
 const UnknownSign = require('../model/UnknownSign');
 const Sign = require('../model/Sign');
 
-const MAX_SIGNS_COUNT = 50;
+const MAX_SIGNS_COUNT = 100;
 
 async function addSign(unknownSign) {
     let sign = Sign.initWithUnknownSign(unknownSign, 0, 'name');
