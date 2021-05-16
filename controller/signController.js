@@ -7,6 +7,7 @@ const signService = require('../service/signService');
 const jwt = require('jsonwebtoken');
 const Sign = require("../model/Sign");
 const multer = require("multer");
+const UnknownSign = require("../model/UnknownSign");
 
 const storageConfig = multer.diskStorage({
     destination: (req, file, cb) =>{
@@ -59,10 +60,28 @@ async function getSigns(req, res) {
     }
 }
 
+async function additionalSignShipment(req, res) {
+    let photoId = req.body.id;
+    let lat = req.body.lat;
+    let lon = req.body.lon;
+    let direction = req.body.direction;
+    let userId = jwt.decode(req.headers.authorization).id;
+    let unknownSign = new UnknownSign(lat, lon, userId, photoId, "", direction);
+    try {
+        await signService.addSign(unknownSign);
+    } catch (err) {
+        logger.log(err.message);
+        res.status(500);
+        res.json({message: "error"});
+    }
+    res.json({message: "success"});
+}
+
 module.exports = function (app) {
     app.get('/getSigns', getSigns);
     app.use('/sign', authenticator.apiAuthenticateJWT);
     app.post('/sign/addSign', addSign);
     app.post('/sign/confirmSign', confirmSign);
+    app.post('/sign/addInfo', additionalSignShipment);
 }
 

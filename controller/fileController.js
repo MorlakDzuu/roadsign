@@ -5,32 +5,26 @@ const signService = require('../service/signService');
 
 const jwt = require('jsonwebtoken');
 const multer = require("multer");
+const { v4: uuidv4 } = require('uuid');
 
 const storageConfig = multer.diskStorage({
     destination: (req, file, cb) =>{
         cb(null, "uploads");
     },
     filename: (req, file, cb) =>{
-        cb(null, file.originalname);
+        cb(null, uuidv4() + ".jpeg");
     }
 });
 const upload = multer({storage: storageConfig});
 
-async function saveImageInfo(req, res) {
-    let lat = req.body.lat;
-    let lon = req.body.lon;
-    let direction = req.body.direction;
-    let userId = jwt.decode(req.headers.authorization).id;
-    let filedata = req.file;
-    if(!filedata) {
+async function addPhoto(req, res) {
+    let fileData = req.file;
+    if(fileData == null) {
         res.status(500);
-        res.json({error: "Exception while working with file"});
+        res.json({message: "Exception while working with file"});
+        return;
     }
-    let download_path = __dirname.replace("controller", "uploads/") + filedata.filename;
-
-    let unknownSign = new UnknownSign(lat, lon, userId, download_path, "", direction);
-    let sign = await signService.addSign(unknownSign);
-    res.json({sign: sign});
+    res.json({id: fileData.filename});
 }
 
 async function getFile(req, res) {
@@ -41,6 +35,6 @@ async function getFile(req, res) {
 
 module.exports = function (app) {
     app.use('/file', authenticator.apiAuthenticateJWT);
-    app.post('/file/upload', upload.single("filedata"), saveImageInfo);
+    app.post('/file/upload', upload.single("filedata"), addPhoto);
     app.get('/file/getFile/:uuid', getFile);
 }
