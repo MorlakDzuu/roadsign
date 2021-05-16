@@ -24,8 +24,9 @@ async function addSign(req, res) {
     let lon = req.body.lon;
     let name = req.body.name;
     let address = req.body.address;
+    let uuid = req.body.uuid;
     try {
-        let sign = new Sign(0, lat, lon, name, userId, "341", address, 1);
+        let sign = new Sign(0, lat, lon, name, userId, uuid, address, 1);
         let signId = await signRepository.addSign(sign);
         await confirmedSignRepository.confirmSignById(signId);
         sign.signId = signId;

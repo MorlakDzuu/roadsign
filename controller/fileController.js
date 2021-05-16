@@ -17,8 +17,9 @@ const storageConfig = multer.diskStorage({
 const upload = multer({storage: storageConfig});
 
 async function saveImageInfo(req, res) {
-    let coordinates = req.body.coordinates;
-    let address = req.body.address;
+    let lat = req.body.lat;
+    let lon = req.body.lon;
+    let direction = req.body.direction;
     let userId = jwt.decode(req.headers.authorization).id;
     let filedata = req.file;
     if(!filedata) {
@@ -27,7 +28,7 @@ async function saveImageInfo(req, res) {
     }
     let download_path = __dirname.replace("controller", "uploads/") + filedata.filename;
 
-    let unknownSign = new UnknownSign(coordinates, userId, download_path, address);
+    let unknownSign = new UnknownSign(lat, lon, userId, download_path, "", direction);
     let sign = await signService.addSign(unknownSign);
     res.json({sign: sign});
 }
