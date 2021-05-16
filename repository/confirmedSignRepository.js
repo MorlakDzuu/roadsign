@@ -23,7 +23,7 @@ async function getSigns(leftDown, leftUp, rightDown, rightUp, lat, lon, filter) 
     //    '         + SIN(RADIANS(lat))\n' +
     //    '         * SIN(RADIANS($3)))) <= $4', [lat, lon, lat, radius]);
      */
-    let data = await database.db.manyOrNone('SELECT * FROM signs WHERE (lat > $1) AND (lat < $2) AND (lon > $3) AND (lon < %4)',
+    let data = await database.db.manyOrNone('SELECT * FROM signs WHERE (lat > $1) AND (lat < $2) AND (lon > $3) AND (lon < $4)',
         [leftDown.lat, rightUp.lat, leftDown.lon, rightUp.lon]);
     return data;
 }
