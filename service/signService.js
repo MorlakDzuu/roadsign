@@ -8,6 +8,7 @@ const MAX_SIGNS_COUNT = 100;
 async function addSign(unknownSign) {
     let sign = Sign.initWithUnknownSign(unknownSign, 0, 'name');
     sign.id = await signRepository.addSign(sign);
+    await signRepository.addSignToQueue(sign.id);
     return sign;
 }
 
