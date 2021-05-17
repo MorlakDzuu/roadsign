@@ -27,7 +27,13 @@ async function getPhoto(req, res) {
     }
 }
 
+async function sendPhotoInfo(req, res) {
+    console.log(req.headers.path);
+    console.log(req.headers.labels);
+}
+
 module.exports = function (app) {
     app.use('/neuron', authenticator);
     app.get('/neuron/getPhoto', getPhoto);
+    app.post('/neuron/sendPhotoInfo', sendPhotoInfo);
 }
