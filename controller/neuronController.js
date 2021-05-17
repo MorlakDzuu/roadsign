@@ -34,7 +34,7 @@ async function sendPhotoInfo(req, res) {
         console.log("data " + data);
     });
     req.on('files', function (data) {
-        console.log("files " + data);
+        console.log("files " + data.labels);
     });
     res.json({message: "okey"});
 }
