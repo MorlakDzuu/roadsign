@@ -17,6 +17,7 @@ function getSignModel(sign) {
         lat: sign.lat,
         lon: sign.lon,
         type: sign.name,
+        address: sign.lat + " ," + sign.lon,
         correct: true
     };
 }
