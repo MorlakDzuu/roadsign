@@ -20,6 +20,7 @@ async function getPhoto(req, res) {
         }
         let fileName = sign.photo;
         let path = __dirname.replace("controller", "uploads/") + fileName;
+        res.setHeader('id', fileName);
         res.download(path, fileName);
     } catch (err) {
         logger.log(err.message);
