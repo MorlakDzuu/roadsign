@@ -37,3 +37,15 @@ CREATE TABLE confirmed_signs
         ON DELETE CASCADE
         NOT VALID
 );
+
+CREATE TABLE processing_queue
+(
+    id serial NOT NULL,
+    "sign_id" integer NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY ("sign_id")
+            REFERENCES public.signs (id) MATCH SIMPLE
+            ON UPDATE CASCADE
+            ON DELETE CASCADE
+            NOT VALID
+);
