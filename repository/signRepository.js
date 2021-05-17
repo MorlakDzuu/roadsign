@@ -14,7 +14,7 @@ async function addSignToQueue(signId) {
 
 async function getSigFromQueue() {
     const data = await database.db.oneOrNone('SELECT * FROM processing_queue INNER JOIN signs ON ' +
-        '(processing_queue.sign_id = signs.id) order by id asc limit 1');
+        '(processing_queue.sign_id = signs.id) order by processing_queue.id asc limit 1');
     return data;
 }
 
