@@ -18,7 +18,7 @@ async function getPhoto(req, res) {
             res.json({message: 'no photo to process'});
             return;
         }
-        let fileName = sign.photo + ".jpeg";
+        let fileName = sign.photo;
         let path = __dirname.replace("controller", "uploads/") + fileName;
         res.download(path, fileName);
     } catch (err) {
