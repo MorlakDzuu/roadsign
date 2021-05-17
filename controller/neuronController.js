@@ -30,7 +30,7 @@ async function getPhoto(req, res) {
 
 async function sendPhotoInfo(req, res) {
     console.log(req.headers.id);
-    console.log(req.body);
+    console.log(req.body.labels);
     req.on('data', function (data) {
         console.log("data " + data);
     });
