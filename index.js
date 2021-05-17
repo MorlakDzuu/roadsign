@@ -22,6 +22,7 @@ require('./controller/security/authController')(app);
 require('./controller/userController')(app);
 require('./controller/fileController')(app);
 require('./controller/signController')(app);
+require('./controller/neuronController')(app);
 
 server.listen(port, function() {
     console.log('Skill change started on port ' + port);
