@@ -45,7 +45,8 @@ function connection(socket) {
     socket.on('sendFile', async function(data) {
         let name = uuidv4() + ".jpeg";
         let buffer = data.buffer;
-        let coordinates = data.coordinates;
+        let lat = data.lat;
+        let lon = data.lon;
         let direction = data.direction;
 
         let path = __dirname.replace('/socket', '') + '/uploads/' + name;
@@ -59,7 +60,7 @@ function connection(socket) {
                 });
             })
         });
-        let unknownSign = new UnknownSign(coordinates, userId, name, "", direction);
+        let unknownSign = new UnknownSign(lat, lon, userId, name, "", direction);
         await signService.addSign(unknownSign);
     });
 
