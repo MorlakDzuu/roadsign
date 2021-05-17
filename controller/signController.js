@@ -64,9 +64,10 @@ async function additionalSignShipment(req, res) {
     let photoId = req.body.id;
     let lat = req.body.lat;
     let lon = req.body.lon;
+    let address = req.body.address;
     let direction = req.body.direction;
     let userId = jwt.decode(req.headers.authorization).id;
-    let unknownSign = new UnknownSign(lat, lon, userId, photoId, "", direction);
+    let unknownSign = new UnknownSign(lat, lon, userId, photoId, address, direction);
     try {
         await signService.addSign(unknownSign);
     } catch (err) {
