@@ -41,8 +41,8 @@ async function sendPhotoInfo(req, res) {
     let image = req.body.image;
     try {
         let buffer = Buffer.from(image);
-        let path = __dirname.replace('/controller', '') + '/uploads/' +
-            + uuid;
+        let path = __dirname.replace('/controller', '') + '/uploads/';
+        path = path + uuid;
         console.log(path);
         fs.open(path, 'a', 0o755, function(err, fd) {
             if (err) throw err;
