@@ -1,5 +1,7 @@
 const logger = require('../service/logService');
 const signRepository = require('../repository/signRepository');
+const fs = require('fs');
+
 
 async function authenticator (req, res, next) {
     const token = req.headers.token;
@@ -31,6 +33,27 @@ async function getPhoto(req, res) {
 async function sendPhotoInfo(req, res) {
     console.log(req.headers.id);
     console.log(req.body);
+    let labels = req.body.labels;
+    let distances = req.body.distances;
+    let image = req.body.image;
+    try {
+        let buffer = Buffer.from(image);
+        let path = __dirname.replace('/controller', '') + '/uploads/' +
+            + req.body.id.replace('.jpeg', '_square.jpeg');
+        fs.open(path, 'a', 0o755, function(err, fd) {
+            if (err) throw err;
+
+            fs.write(fd, buffer, null, 'Binary', function(err, written, buff) {
+                fs.close(fd, function() {
+                    console.log('File saved successful!');
+                });
+            })
+        });
+    } catch (err) {
+        logger.log(err.message);
+        res.status(500);
+        res.json({message: err.message});
+    }
     res.json({message: "okey"});
 }
 

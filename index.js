@@ -11,7 +11,7 @@ global.connections = []
 
 const port = 8080;
 
-app.use(bodyParser.urlencoded({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
     console.log(__dirname + '/index.html');
