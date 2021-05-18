@@ -45,6 +45,7 @@ async function sendPhotoInfo(req, res) {
 
             fs.write(fd, buffer, null, 'Binary', function(err, written, buff) {
                 fs.close(fd, function() {
+                    console.log(path);
                     console.log('File saved successful!');
                 });
             })
