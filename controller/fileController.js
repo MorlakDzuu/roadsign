@@ -34,7 +34,7 @@ async function getFile(req, res) {
 }
 
 module.exports = function (app) {
+    app.get('/file/getFile/:uuid', getFile);
     app.use('/file', authenticator.apiAuthenticateJWT);
     app.post('/file/upload', upload.single("filedata"), addPhoto);
-    app.get('/file/getFile/:uuid', getFile);
 }
