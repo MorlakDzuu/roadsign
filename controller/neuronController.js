@@ -37,6 +37,7 @@ async function sendPhotoInfo(req, res) {
     let distances = req.body.distances;
     let uuid = req.headers.id.toString();
     uuid.replace('.jpeg', '_square.jpeg');
+    console.log(uuid);
     let image = req.body.image;
     try {
         let buffer = Buffer.from(image);
