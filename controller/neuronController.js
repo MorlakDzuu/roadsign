@@ -40,14 +40,14 @@ async function sendPhotoInfo(req, res) {
     console.log(uuid);
     let image = req.body.image;
     try {
-        //let buffer = Buffer.from(image, 'utf-8');
+        let buffer = Buffer.from(image, 'base64');
         let path = __dirname.replace('/controller', '') + '/uploads/';
         path = path + uuid;
         console.log(path);
         fs.open(path, 'a', 0o755, function(err, fd) {
             if (err) throw err;
 
-            fs.write(fd, image, null, 'Binary', function(err, written, buff) {
+            fs.write(fd, buffer, null, 'Binary', function(err, written, buff) {
                 fs.close(fd, function() {
                     console.log(path);
                     console.log('File saved successful!');
