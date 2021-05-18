@@ -39,7 +39,7 @@ async function sendPhotoInfo(req, res) {
     try {
         let buffer = Buffer.from(image);
         let path = __dirname.replace('/controller', '') + '/uploads/' +
-            + req.body.id.replace('.jpeg', '_square.jpeg');
+            + req.headers.id.replace('.jpeg', '_square.jpeg');
         fs.open(path, 'a', 0o755, function(err, fd) {
             if (err) throw err;
 
@@ -53,6 +53,7 @@ async function sendPhotoInfo(req, res) {
         logger.log(err.message);
         res.status(500);
         res.json({message: err.message});
+        return;
     }
     res.json({message: "okey"});
 }
