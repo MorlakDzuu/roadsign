@@ -40,7 +40,7 @@ async function sendPhotoInfo(req, res) {
     console.log(uuid);
     let image = req.body.image;
     try {
-        let buffer = Buffer.from(image);
+        let buffer = Buffer.from(image, 'utf-8');
         let path = __dirname.replace('/controller', '') + '/uploads/';
         path = path + uuid;
         console.log(path);
