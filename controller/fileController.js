@@ -28,7 +28,7 @@ async function addPhoto(req, res) {
 }
 
 async function getFile(req, res) {
-    let fileName = req.params.uuid + '.jpeg';
+    let fileName = req.params.uuid + '.jpg';
     let path = __dirname.replace("controller", "uploads/") + fileName;
     res.download(path, fileName);
 }
