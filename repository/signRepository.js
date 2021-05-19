@@ -19,7 +19,7 @@ async function getSignFromQueue() {
 }
 
 async function deleteSignFromQueueBySignId(signId) {
-    await database.db.none('DELETE FROM processing_queue WHERE id = $1', [signId]);
+    await database.db.none('DELETE FROM processing_queue WHERE sign_id = $1', [signId]);
 }
 
 async function getSignByUuid(uuid) {
