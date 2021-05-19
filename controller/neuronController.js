@@ -18,11 +18,13 @@ async function authenticator (req, res, next) {
 
 async function getPhoto(req, res) {
     try {
-        let sign = await signRepository.getSigFromQueue();
+        let sign = await signRepository.getSignFromQueue();
+        console.log(sign);
         if (sign == null) {
             res.json({message: 'no photo to process'});
             return;
         }
+        //await signRepository.deleteSignFromQueue(sign.id);
         let fileName = sign.photo;
         let path = __dirname.replace("controller", "uploads/") + fileName;
         res.setHeader('id', fileName);

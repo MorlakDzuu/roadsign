@@ -12,10 +12,14 @@ async function addSignToQueue(signId) {
     await database.db.none('INSERT INTO processing_queue (sign_id) VALUES ($1)', [signId]);
 }
 
-async function getSigFromQueue() {
+async function getSignFromQueue() {
     const data = await database.db.oneOrNone('SELECT * FROM processing_queue INNER JOIN signs ON ' +
         '(processing_queue.sign_id = signs.id) order by processing_queue.id asc limit 1');
     return data;
+}
+
+async function deleteSignFromQueue(signId) {
+    await database.db.none('DELETE FROM processing_queue WHERE id = $1', [signId]);
 }
 
 async function getSignByUuid(uuid) {
@@ -26,6 +30,7 @@ async function getSignByUuid(uuid) {
 module.exports = {
     addSign,
     addSignToQueue,
-    getSigFromQueue,
-    getSignByUuid
+    getSignFromQueue,
+    getSignByUuid,
+    deleteSignFromQueue
 };
