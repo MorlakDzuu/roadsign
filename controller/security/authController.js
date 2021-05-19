@@ -33,7 +33,10 @@ async function register(req, res) {
         }
         if (id > 0) {
             const token = jwt.sign({id: id, role: roles.USER}, config.jwtApiAccessToken);
-            res.json({token: token});
+            res.json({
+                token: token,
+                hasName: false
+            });
             return;
         } else {
             res.status(500);
@@ -63,7 +66,14 @@ async function login(req, res) {
         }
         if (id > 0) {
             const token = jwt.sign({id: id, role: user.role}, config.jwtApiAccessToken);
-            res.json({token: token});
+            let hasName = false;
+            if (user.name != null && user.name != "") {
+                hasName = true;
+            }
+            res.json({
+                token: token,
+                hasName: hasName
+            });
             return;
         } else {
             res.status(500);
