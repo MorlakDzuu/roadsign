@@ -40,7 +40,7 @@ async function sendPhotoInfo(req, res) {
     let labels = req.body.labels;
     let distances = req.body.distances;
     let uuid = req.headers.id.toString();
-    uuid = uuid.replace('.jpeg', '_square.jpg');
+    uuid = uuid.replace('.jpeg', '_square.jpeg');
     console.log(uuid);
     let image = req.body.image;
     try {
