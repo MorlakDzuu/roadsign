@@ -18,7 +18,7 @@ async function getSignFromQueue() {
     return data;
 }
 
-async function deleteSignFromQueue(signId) {
+async function deleteSignFromQueueBySignId(signId) {
     await database.db.none('DELETE FROM processing_queue WHERE id = $1', [signId]);
 }
 
@@ -32,5 +32,5 @@ module.exports = {
     addSignToQueue,
     getSignFromQueue,
     getSignByUuid,
-    deleteSignFromQueue
+    deleteSignFromQueueBySignId
 };
