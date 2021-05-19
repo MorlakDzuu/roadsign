@@ -1,6 +1,6 @@
 const request = require('request');
 
-const GOOGLE_API_KEY = "";
+const GOOGLE_API_KEY = "AIzaSyDN7fDyGLsp9XwsZWId2Y7EOHF_G5GGM2c";
 
 async function makeGoogleApiRequest(lat, lon) {
     try {
