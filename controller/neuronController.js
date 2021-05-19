@@ -2,6 +2,7 @@ const logger = require('../service/logService');
 const signRepository = require('../repository/signRepository');
 const fs = require('fs');
 const Sign = require("../model/Sign");
+const bodyParser = require('body-parser');
 
 
 async function authenticator (req, res, next) {
@@ -70,6 +71,10 @@ async function sendPhotoInfo(req, res) {
 }
 
 module.exports = function (app) {
+    app.use('/neuron', bodyParser.urlencoded({
+        limit: '50mb',
+        extended: false
+    }));
     app.use('/neuron', authenticator);
     app.get('/neuron/getPhoto', getPhoto);
     app.post('/neuron/sendPhotoInfo', sendPhotoInfo);

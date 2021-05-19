@@ -11,21 +11,18 @@ global.connections = []
 
 const port = 8080;
 
-app.use(bodyParser.urlencoded({
-    limit: '50mb',
-    extended: false
-}));
-
 app.get('/', (req, res) => {
     console.log(__dirname + '/index.html');
     res.sendFile(__dirname + '/index.html');
 });
 
+require('./controller/neuronController')(app);
+app.use(bodyParser.json());
+
 require('./controller/security/authController')(app);
 require('./controller/userController')(app);
 require('./controller/fileController')(app);
 require('./controller/signController')(app);
-require('./controller/neuronController')(app);
 
 server.listen(port, function() {
     console.log('Skill change started on port ' + port);
