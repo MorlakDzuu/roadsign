@@ -1,6 +1,7 @@
 const logger = require('../service/logService');
 const signRepository = require('../repository/signRepository');
 const fs = require('fs');
+const Sign = require("../model/Sign");
 
 
 async function authenticator (req, res, next) {
@@ -54,6 +55,11 @@ async function sendPhotoInfo(req, res) {
                 });
             })
         });
+        let sign = await signRepository.getSignByUuid(req.headers.id);
+        for (let i = 0; i < labels.length; i++) {
+            let signModel = new Sign(sign.id, sign.lat, sign.lon, labels[i], sign.user_id, uuid, sign.address, sign.direction);
+            await signRepository.addSign(signModel);
+        }
     } catch (err) {
         logger.log(err.message);
         res.status(500);

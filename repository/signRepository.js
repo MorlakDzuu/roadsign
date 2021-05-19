@@ -18,8 +18,14 @@ async function getSigFromQueue() {
     return data;
 }
 
+async function getSignByUuid(uuid) {
+    const data = await database.db.one('SELECT * FROM signs WHERE photo = $1', [uuid]);
+    return data;
+}
+
 module.exports = {
     addSign,
     addSignToQueue,
-    getSigFromQueue
+    getSigFromQueue,
+    getSignByUuid
 };
