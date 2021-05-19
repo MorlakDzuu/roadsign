@@ -4,8 +4,9 @@ const GOOGLE_API_KEY = "AIzaSyDN7fDyGLsp9XwsZWId2Y7EOHF_G5GGM2c";
 
 async function makeGoogleApiRequest(lat, lon) {
     try {
-        request.get({url:'https://roads.googleapis.com/v1/snapToRoads?path='
-                + lat + ',' + lon + '&key=' + GOOGLE_API_KEY}, function optionalCallback(err, httpResponse, body) {
+        let url = 'https://roads.googleapis.com/v1/snapToRoads?path=' + lat + ',' + lon + '&interpolate=true&key=' +
+            + GOOGLE_API_KEY;
+        request.post({url: url}, function optionalCallback(err, httpResponse, body) {
             if (err) {
                 return console.log('upload failed:', err);
             }
