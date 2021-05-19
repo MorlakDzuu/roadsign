@@ -1,5 +1,6 @@
 const logger = require('../service/logService');
 const signRepository = require('../repository/signRepository');
+const confirmedSignRepository = require('../repository/confirmedSignRepository');
 const fs = require('fs');
 const Sign = require("../model/Sign");
 const bodyParser = require('body-parser');
@@ -59,6 +60,7 @@ async function sendPhotoInfo(req, res) {
         let sign = await signRepository.getSignByUuid(req.headers.id);
         for (let i = 0; i < labels.length; i++) {
             let signModel = new Sign(sign.id, sign.lat, sign.lon, labels[i], sign.user_id, uuid, sign.address, sign.direction);
+            await confirmedSignRepository.confirmSignById(sign.id);
             await signRepository.addSign(signModel);
         }
     } catch (err) {
