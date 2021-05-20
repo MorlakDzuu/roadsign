@@ -23,6 +23,7 @@ async function getPhoto(req, res) {
             res.json({message: 'no photo to process'});
             return;
         }
+        console.log('денис забрал фотку ' + sign.sign_id);
         await signRepository.deleteSignFromQueueBySignId(sign.sign_id);
         let fileName = sign.photo;
         let path = __dirname.replace("controller", "uploads/") + fileName;
@@ -48,6 +49,7 @@ async function sendPhotoInfo(req, res) {
         let path = __dirname.replace('/controller', '') + '/uploads/';
         path = path + uuid;
         console.log(path);
+        console.log(req.body);
         fs.open(path, 'a', 0o755, function(err, fd) {
             if (err) throw err;
 
