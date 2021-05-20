@@ -52,8 +52,9 @@ async function confirmSign(req, res) {
 
 async function getSigns(req, res) {
     try {
-        //let signs = await signService.getSignsCluster(100, 55.759003, 37.622381, null);
-        //res.json(signs);
+        let signs = await signService.getSignsCluster(req.body.leftDown, req.body.leftUp, req.body.rightDown,
+            req.body.rightUp, req.body.lat, req.body.lon, null, req.body.needConfirmed, req.body.needUnconfirmed);
+        res.json(signs);
     } catch (err) {
         res.status(500);
         return;
