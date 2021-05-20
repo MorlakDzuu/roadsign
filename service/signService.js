@@ -6,41 +6,63 @@ const Sign = require('../model/Sign');
 const MAX_SIGNS_COUNT = 100;
 
 async function addSign(unknownSign) {
-    let sign = Sign.initWithUnknownSign(unknownSign, 0, 'name');
+    let sign = Sign.initWithUnknownSign(unknownSign, 0, '');
     sign.id = await signRepository.addSign(sign);
     await signRepository.addSignToQueue(sign.id);
     return sign;
 }
 
-function getSignModel(sign) {
+function getSignModel(sign, confirmed) {
     return {
         uuid: sign.photo,
         lat: sign.lat,
         lon: sign.lon,
         type: sign.name,
         address: sign.lat + " ," + sign.lon,
-        correct: true
+        correct: confirmed
     };
 }
 
-async function getSignsCluster(leftDown, leftUp, rightDown, rightUp, lat, lon, filter) {
-    let signs = await confirmedSignRepository.getSigns(leftDown, leftUp, rightDown, rightUp, lat, lon, filter);
+async function getSignsCluster(leftDown, leftUp, rightDown, rightUp, lat, lon, filter, needConfirmed, needUnconfirmed) {
+    let signsUnconfirmed = [];
+    let signsConfirmed = [];
+    if (needUnconfirmed) {
+        signsUnconfirmed = await signRepository.getSigns(leftDown, leftUp, rightDown, rightUp, lat, lon, filter);
+    }
+    if (needConfirmed) {
+        signsConfirmed = await confirmedSignRepository.getSigns(leftDown, leftUp, rightDown, rightUp, lat, lon, filter);
+    }
     let cluster1 = [];
     let cluster2 = [];
     let cluster3 = [];
     let cluster4 = [];
-    signs.forEach(sign => {
+    signsConfirmed.forEach(sign => {
         if (sign.lat >= lat) {
             if (sign.lon >= lon) {
-                cluster2.push(getSignModel(sign));
+                cluster2.push(getSignModel(sign, true));
             } else {
-                cluster1.push(getSignModel(sign));
+                cluster1.push(getSignModel(sign, true));
             }
         } else {
             if (sign.lon >= lon) {
-                cluster4.push(getSignModel(sign));
+                cluster4.push(getSignModel(sign, true));
             } else {
-                cluster3.push(getSignModel(sign));
+                cluster3.push(getSignModel(sign, true));
+            }
+        }
+    });
+    signsUnconfirmed.forEach(sign => {
+        if (sign.lat >= lat) {
+            if (sign.lon >= lon) {
+                cluster2.push(getSignModel(sign, false));
+            } else {
+                cluster1.push(getSignModel(sign, false));
+            }
+        } else {
+            if (sign.lon >= lon) {
+                cluster4.push(getSignModel(sign, false));
+            } else {
+                cluster3.push(getSignModel(sign, false));
             }
         }
     });
