@@ -66,6 +66,7 @@ function connection(socket) {
 
     socket.on('getSigns', async function(data) {
         try {
+            console.log(data);
             await signService.getSignsCluster(data.leftDown, data.leftUp, data.rightDown, data.rightUp,
                 data.lat, data.lon, data.filter, data.needConfirmed, data.needUnconfirmed).then(signs => {
                     console.log(signs);
