@@ -50,16 +50,18 @@ async function sendPhotoInfo(req, res) {
         path = path + uuid;
         console.log(path);
         console.log(req.body);
-        fs.open(path, 'a', 0o755, function(err, fd) {
-            if (err) throw err;
+        if (labels.length > 0) {
+            fs.open(path, 'a', 0o755, function (err, fd) {
+                if (err) throw err;
 
-            fs.write(fd, buffer, null, 'Binary', function(err, written, buff) {
-                fs.close(fd, function() {
-                    console.log(path);
-                    console.log('File saved successful!');
-                });
-            })
-        });
+                fs.write(fd, buffer, null, 'Binary', function (err, written, buff) {
+                    fs.close(fd, function () {
+                        console.log(path);
+                        console.log('File saved successful!');
+                    });
+                })
+            });
+        }
         let sign = await signRepository.getSignByUuid(req.headers.id);
         await signRepository.deleteSignFromQueueBySignId(sign.id);
         for (let i = 0; i < labels.length; i++) {
