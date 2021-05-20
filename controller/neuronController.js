@@ -63,8 +63,8 @@ async function sendPhotoInfo(req, res) {
         let sign = await signRepository.getSignByUuid(req.headers.id);
         for (let i = 0; i < labels.length; i++) {
             let signModel = new Sign(sign.id, sign.lat, sign.lon, labels[i], sign.user_id, uuid, sign.address, sign.direction);
-            await signRepository.addSign(signModel);
-            await confirmedSignRepository.confirmSignById(sign.id);
+            let id = await signRepository.addSign(signModel);
+            await confirmedSignRepository.confirmSignById(id);
         }
     } catch (err) {
         logger.log(err.message);
