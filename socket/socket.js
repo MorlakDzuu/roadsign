@@ -75,6 +75,7 @@ function connection(socket) {
                 sendNotificationData(signs[3], userId, 'cluster4');
             });
         } catch (err) {
+            console.log(err);
             logger.log(err.message);
         }
     });
