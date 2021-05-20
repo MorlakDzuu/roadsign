@@ -32,6 +32,8 @@ async function getSignsCluster(leftDown, leftUp, rightDown, rightUp, lat, lon, f
     if (needConfirmed) {
         signsConfirmed = await confirmedSignRepository.getSigns(leftDown, leftUp, rightDown, rightUp, lat, lon, filter);
     }
+    console.log(signsUnconfirmed);
+    console.log(signsConfirmed);
     let cluster1 = [];
     let cluster2 = [];
     let cluster3 = [];
