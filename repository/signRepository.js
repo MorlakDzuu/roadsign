@@ -9,8 +9,8 @@ async function addSign(sign) {
 }
 
 async function getSigns(leftDown, leftUp, rightDown, rightUp, lat, lon, filter) {
-    let data = await database.db.manyOrNone('SELECT * FROM signs WHERE (lat > $1) AND (lat < $2) AND (lon > $3) AND (lon < $4)' +
-        ' AND (name != "")',
+    let data = await database.db.manyOrNone("SELECT * FROM signs WHERE (lat > $1) AND (lat < $2) AND (lon > $3) AND (lon < $4)" +
+        " AND (name != '')",
         [leftDown.lat, rightUp.lat, leftDown.lon, rightUp.lon]);
     return data;
 }
