@@ -63,7 +63,7 @@ async function sendPhotoInfo(req, res) {
             });
         }
         let sign = await signRepository.getSignByUuid(req.headers.id);
-        await signRepository.deleteSignFromQueueBySignId(sign.id);
+        await signRepository.deleteSignById(sign.id);
         for (let i = 0; i < labels.length; i++) {
             let signModel = new Sign(sign.id, sign.lat, sign.lon, labels[i], sign.user_id, uuid, sign.address, sign.direction);
             let id = await signRepository.addSign(signModel);
