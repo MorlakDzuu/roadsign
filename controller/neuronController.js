@@ -75,7 +75,8 @@ async function sendPhotoInfo(req, res) {
                 }
             }
         } else if (labels.length > 0){
-            if (!(await signRepository.isSignAlreadyDetected(sign.lat, sign.lon, uuid, labels))) {
+            let bool = await signRepository.isSignAlreadyDetected(sign.lat, sign.lon, uuid, labels);
+            if (!bool) {
                 let signModel = new Sign(sign.id, sign.lat, sign.lon, labels, sign.user_id, uuid, sign.address, sign.direction);
                 let id = await signRepository.addSign(signModel);
                 await confirmedSignRepository.confirmSignById(id);
