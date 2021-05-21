@@ -1,6 +1,7 @@
 const signRepository = require('../repository/signRepository');
 const confirmedSignRepository = require('../repository/confirmedSignRepository');
 const Sign = require('../model/Sign');
+const { v4: uuidv4 } = require('uuid');
 
 const types = [
     "1_1",
@@ -196,7 +197,7 @@ async function generate() {
             let lat = Math.random() * (55.913405 - 55.566060) + 55.566060;
             let lon = Math.random() * (37.851512 - 37.354691) + 37.354691
             let type = Math.floor(Math.random() * types.length);
-            let sign = new Sign(0, lat, lon, types[type], 12, "test", "test", 0);
+            let sign = new Sign(0, lat, lon, types[type], 12, uuidv4(), "test", 0);
             let signId = await signRepository.addSign(sign);
             if (Math.random() < 0.5) {
                 await confirmedSignRepository.confirmSignById(signId);
