@@ -5,7 +5,7 @@ async function confirmSignById(signId) {
 }
 
 async function deleteSign(signId) {
-    await database.db.none('DELETE * FROM confirmed_signs WHERE sign_id = $1', [signId]);
+    await database.db.none('DELETE FROM confirmed_signs WHERE sign_id = $1', [signId]);
 }
 
 async function getSigns(leftDown, leftUp, rightDown, rightUp, lat, lon, filter) {
