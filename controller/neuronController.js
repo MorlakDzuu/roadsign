@@ -70,7 +70,7 @@ async function sendPhotoInfo(req, res) {
                 let id = await signRepository.addSign(signModel);
                 await confirmedSignRepository.confirmSignById(id);
             }
-        } else {
+        } else if (labels.length > 0){
             let signModel = new Sign(sign.id, sign.lat, sign.lon, labels, sign.user_id, uuid, sign.address, sign.direction);
             let id = await signRepository.addSign(signModel);
             await confirmedSignRepository.confirmSignById(id);
