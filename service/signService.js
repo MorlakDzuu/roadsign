@@ -26,17 +26,12 @@ function getSignModel(sign, confirmed) {
 async function getSignsCluster(leftDown, leftUp, rightDown, rightUp, lat, lon, filter, needConfirmed, needUnconfirmed) {
     let signsUnconfirmed = [];
     let signsConfirmed = [];
-    console.log('syka');
     if (needUnconfirmed) {
         signsUnconfirmed = await signRepository.getSigns(leftDown, leftUp, rightDown, rightUp, lat, lon, filter);
     }
-    console.log('syka');
     if (needConfirmed) {
         signsConfirmed = await confirmedSignRepository.getSigns(leftDown, leftUp, rightDown, rightUp, lat, lon, filter);
     }
-    console.log('syka');
-    console.log(signsUnconfirmed);
-    console.log(signsConfirmed);
     let cluster1 = [];
     let cluster2 = [];
     let cluster3 = [];
@@ -104,7 +99,6 @@ async function getSignsCluster(leftDown, leftUp, rightDown, rightUp, lat, lon, f
         size: cluster4Size,
         signs: cluster4
     });
-    console.log(signsArray);
     return signsArray;
 }
 
