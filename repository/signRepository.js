@@ -49,7 +49,7 @@ async function getSignByUuidAndName(uuid, name) {
 }
 
 async function isSignAlreadyDetected(lat, lon, uuid, type) {
-    let radius = 0.005;
+    let radius = 0.010;
     let data = await database.db.manyOrNone('SELECT * FROM signs WHERE ' +
         '(111.111 *\n' +
         '    DEGREES(ACOS(COS(RADIANS(lat))\n' +
