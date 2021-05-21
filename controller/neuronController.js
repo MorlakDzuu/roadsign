@@ -66,18 +66,18 @@ async function sendPhotoInfo(req, res) {
         await signRepository.deleteSignById(sign.id);
         if (Array.isArray(labels)) {
             for (let i = 0; i < labels.length; i++) {
-                if (!(await signRepository.isSignAlreadyDetected(sign.lat, sign.lon, uuid, labels[i]))) {
+                //if (!(await signRepository.isSignAlreadyDetected(sign.lat, sign.lon, uuid, labels[i]))) {
                     let signModel = new Sign(sign.id, sign.lat, sign.lon, labels[i], sign.user_id, uuid, sign.address, sign.direction);
                     let id = await signRepository.addSign(signModel);
                     await confirmedSignRepository.confirmSignById(id);
-                }
+                //}
             }
         } else if (labels.length > 0){
-            if (!(await signRepository.isSignAlreadyDetected(sign.lat, sign.lon, uuid, labels))) {
+            //if (!(await signRepository.isSignAlreadyDetected(sign.lat, sign.lon, uuid, labels))) {
                 let signModel = new Sign(sign.id, sign.lat, sign.lon, labels, sign.user_id, uuid, sign.address, sign.direction);
                 let id = await signRepository.addSign(signModel);
                 await confirmedSignRepository.confirmSignById(id);
-            }
+            //}
         }
     } catch (err) {
         logger.log(err.message);
