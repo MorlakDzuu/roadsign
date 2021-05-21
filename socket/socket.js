@@ -31,6 +31,10 @@ function sendNotificationData(data, userId, key) {
     }
 }
 
+function sendNotificationDataToAll(data, key) {
+    io.sockets.emit(key, data);
+}
+
 function connection(socket) {
     let token = socket.handshake.query.token;
     let userId = jwt.decode(token).id;
@@ -86,5 +90,6 @@ function init() {
 }
 
 module.exports = {
-    init
+    init,
+    sendNotificationDataToAll
 };
