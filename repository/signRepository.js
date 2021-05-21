@@ -56,7 +56,7 @@ async function isSignAlreadyDetected(lat, lon, uuid, type) {
         '         * COS(RADIANS($1))\n' +
         '         * COS(RADIANS(lon - $2))\n' +
         '         + SIN(RADIANS(lat))\n' +
-        '         * SIN(RADIANS($3)))) <= $4) AND (name = $6)', [lat, lon, lat, radius, type]);
+        '         * SIN(RADIANS($3)))) <= $4) AND (name = $5)', [lat, lon, lat, radius, type]);
     console.log(data);
     if (data.length == 0) {
         return false;
