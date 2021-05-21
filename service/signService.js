@@ -51,21 +51,23 @@ async function getSignsCluster(leftDown, leftUp, rightDown, rightUp, lat, lon, f
             }
         }
     });
-    signsUnconfirmed.forEach(sign => {
-        if (sign.lat >= lat) {
-            if (sign.lon >= lon) {
-                cluster2.push(getSignModel(sign, false));
+    for (const sign of signsUnconfirmed) {
+        if (!(await confirmedSignRepository.isSignConfirmed(sign.id))) {
+            if (sign.lat >= lat) {
+                if (sign.lon >= lon) {
+                    cluster2.push(getSignModel(sign, false));
+                } else {
+                    cluster1.push(getSignModel(sign, false));
+                }
             } else {
-                cluster1.push(getSignModel(sign, false));
-            }
-        } else {
-            if (sign.lon >= lon) {
-                cluster4.push(getSignModel(sign, false));
-            } else {
-                cluster3.push(getSignModel(sign, false));
+                if (sign.lon >= lon) {
+                    cluster4.push(getSignModel(sign, false));
+                } else {
+                    cluster3.push(getSignModel(sign, false));
+                }
             }
         }
-    });
+    }
     let cluster1Size = cluster1.length;
     if (cluster1Size > MAX_SIGNS_COUNT) {
         cluster1 = null;
