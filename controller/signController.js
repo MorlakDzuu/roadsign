@@ -78,11 +78,41 @@ async function additionalSignShipment(req, res) {
     res.json({message: "success"});
 }
 
+async function editSign(req, res) {
+    let uuid = req.body.uuid;
+    let oldName = req.body.oldName;
+    let name = req.body.name;
+    let address = req.body.address;
+    let confirmed = req.body.confirmed;
+
+    try {
+        let sign = await signRepository.getSignByUuidAndName(uuid, oldName);
+        sign.name = name;
+        sign.address = address;
+        let confirmedOld = await confirmedSignRepository.isSignConfirmed(sign.id);
+        if (!confirmedOld && confirmed) {
+            await confirmedSignRepository.confirmSignById(sign.id);
+        } else if (!confirmed && confirmedOld) {
+            await confirmedSignRepository.deleteSign(sign.id);
+        }
+        await signRepository.editSign(sign);
+        res.json({message: "success"});
+    } catch (err) {
+        logger.log(err);
+        res.status(500);
+        res.json({message: "error"});
+    }
+}
+
 module.exports = function (app) {
     app.get('/getSigns', getSigns);
+
     app.use('/sign', authenticator.apiAuthenticateJWT);
     app.post('/sign/addSign', addSign);
-    app.post('/sign/confirmSign', confirmSign);
     app.post('/sign/addInfo', additionalSignShipment);
+
+    app.use('/sign', authenticator.apiAuthenticateAdminJWT);
+    app.post('/sign/confirmSign', confirmSign);
+    app.post('/sign/editSign', editSign);
 }
 

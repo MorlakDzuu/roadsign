@@ -33,8 +33,18 @@ async function deleteSignById(signId) {
     await database.db.none('DELETE FROM signs WHERE id = $1', [signId]);
 }
 
+async function editSign(sign) {
+    await database.db.none('UPDATE signs SET lat = $1, lon = $2, name = $3, user_id = $4, photo = $5, address = $6 ' +
+        'WHERE id = $7', [sign.lat, sign.lon, sign.name, sign.user_id, sign.photo, sign.address, sign.id]);
+}
+
 async function getSignByUuid(uuid) {
     const data = await database.db.one('SELECT * FROM signs WHERE photo = $1', [uuid]);
+    return data;
+}
+
+async function getSignByUuidAndName(uuid, name) {
+    const data = await database.db.one('SELECT * FROM signs WHERE (photo = $1) AND (name = $2)', [uuid, name]);
     return data;
 }
 
@@ -45,5 +55,7 @@ module.exports = {
     getSignByUuid,
     deleteSignFromQueueBySignId,
     getSigns,
-    deleteSignById
+    deleteSignById,
+    editSign,
+    getSignByUuidAndName
 };
