@@ -68,7 +68,6 @@ function connection(socket) {
         try {
             await signService.getSignsCluster(data.leftDown, data.leftUp, data.rightDown, data.rightUp,
                 data.lat, data.lon, data.filter, data.needConfirmed, data.needUnconfirmed).then(signs => {
-                    console.log(signs);
                 sendNotificationData(signs[0], userId, 'cluster1');
                 sendNotificationData(signs[1], userId, 'cluster2');
                 sendNotificationData(signs[2], userId, 'cluster3');
