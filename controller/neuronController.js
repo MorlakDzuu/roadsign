@@ -66,7 +66,9 @@ async function sendPhotoInfo(req, res) {
         await signRepository.deleteSignById(sign.id);
         if (Array.isArray(labels)) {
             for (let i = 0; i < labels.length; i++) {
-                if (!(await signRepository.isSignAlreadyDetected(sign.lat, sign.lon, uuid, labels[i]))) {
+                let bool = await signRepository.isSignAlreadyDetected(sign.lat, sign.lon, uuid, labels[i]);
+                console.log(bool);
+                if (!bool) {
                     let signModel = new Sign(sign.id, sign.lat, sign.lon, labels[i], sign.user_id, uuid, sign.address, sign.direction);
                     let id = await signRepository.addSign(signModel);
                     await confirmedSignRepository.confirmSignById(id);
