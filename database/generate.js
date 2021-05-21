@@ -198,7 +198,9 @@ async function generate() {
             let type = Math.floor(Math.random() * types.length);
             let sign = new Sign(0, lat, lon, types[type], 12, "test", "test", 0);
             let signId = await signRepository.addSign(sign);
-            await confirmedSignRepository.confirmSignById(signId);
+            if (Math.random() < 0.5) {
+                await confirmedSignRepository.confirmSignById(signId);
+            }
         }
     } catch (err) {
         console.log(err);
