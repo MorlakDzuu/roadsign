@@ -20,9 +20,9 @@ function apiAuthenticateJWT(req, res, next) {
 async function apiAuthenticateAdminJWT(req, res, next) {
     const token = req.headers.authorization;
     try {
-        let user = await userRepository.getUserById(jwt.decode(token).id);
+        let userInfo = await userRepository.getUserById(jwt.decode(token).id);
         jwt.verify(token, config.jwtApiAccessToken, (error, user) => {
-            if (error || user.role == 'user') {
+            if (error || userInfo.role == 'user') {
                 logger.log(error);
                 res.status(401);
                 res.json({message: "auth error"});
