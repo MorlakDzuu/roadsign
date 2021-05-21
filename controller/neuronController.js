@@ -83,6 +83,7 @@ async function sendPhotoInfo(req, res) {
         }
     } catch (err) {
         logger.log(err.message);
+        console.log(err);
         res.status(500);
         res.json({message: err.message});
         return;
