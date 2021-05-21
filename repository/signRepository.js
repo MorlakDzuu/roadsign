@@ -51,12 +51,12 @@ async function getSignByUuidAndName(uuid, name) {
 async function isSignAlreadyDetected(lat, lon, uuid, type) {
     let radius = 0.005;
     let data = await database.db.manyOrNone('SELECT * FROM signs WHERE ' +
-        '111.111 *\n' +
+        '(111.111 *\n' +
         '    DEGREES(ACOS(COS(RADIANS(lat))\n' +
         '         * COS(RADIANS($1))\n' +
         '         * COS(RADIANS(lon - $2))\n' +
         '         + SIN(RADIANS(lat))\n' +
-        '         * SIN(RADIANS($3)))) <= $4 AND (photo = $5) AND (name = $6)', [lat, lon, lat, radius, uuid, type]);
+        '         * SIN(RADIANS($3)))) <= $4) AND (photo = $5) AND (name = $6)', [lat, lon, lat, radius, uuid, type]);
     if (data == null) {
         return false;
     }
