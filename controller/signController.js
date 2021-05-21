@@ -34,7 +34,7 @@ async function addSign(req, res) {
         await confirmedSignRepository.confirmSignById(signId);
 
         let signsNumber = await signRepository.getNumberOfSignsByUserId(userId);
-        socket.sendNotificationData(signsNumber, userId, "signsNumber");
+        socket.sendNotificationData({message: signsNumber}, userId, "signsNumber");
         sign.signId = signId;
         res.json({message: sign});
     } catch (err) {
