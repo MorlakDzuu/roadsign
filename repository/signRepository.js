@@ -48,6 +48,11 @@ async function getSignByUuidAndName(uuid, name) {
     return data;
 }
 
+async function getNumberOfSignsByUserId(userId) {
+    const data = await database.db.one('SELECT COUNT(*) FROM signs WHERE user_id = $1', [userId]);
+    return data.count;
+}
+
 async function isSignAlreadyDetected(lat, lon, uuid, type) {
     let radius = 0.010;
     let data = await database.db.manyOrNone('SELECT * FROM signs WHERE ' +
@@ -74,5 +79,6 @@ module.exports = {
     deleteSignById,
     editSign,
     getSignByUuidAndName,
-    isSignAlreadyDetected
+    isSignAlreadyDetected,
+    getNumberOfSignsByUserId
 };

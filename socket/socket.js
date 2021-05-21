@@ -91,5 +91,6 @@ function init() {
 
 module.exports = {
     init,
-    sendNotificationDataToAll
+    sendNotificationDataToAll,
+    sendNotificationData
 };

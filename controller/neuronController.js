@@ -76,6 +76,8 @@ async function sendPhotoInfo(req, res) {
                     await confirmedSignRepository.confirmSignById(id);
                 }
             }
+            let signsNumber = await signRepository.getNumberOfSignsByUserId(sign.user_id);
+            socket.sendNotificationData(signsNumber, sign.user_id, "signsNumber");
         } else if (labels.length > 0){
             let bool = await signRepository.isSignAlreadyDetected(sign.lat, sign.lon, uuid, labels);
             if (!bool) {
@@ -83,6 +85,9 @@ async function sendPhotoInfo(req, res) {
                 socket.sendNotificationDataToAll(signService.getSignModel(signModel, true), "newSign");
                 let id = await signRepository.addSign(signModel);
                 await confirmedSignRepository.confirmSignById(id);
+
+                let signsNumber = await signRepository.getNumberOfSignsByUserId(sign.user_id);
+                socket.sendNotificationData(signsNumber, sign.user_id, "signsNumber");
             }
         }
     } catch (err) {

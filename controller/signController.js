@@ -32,6 +32,9 @@ async function addSign(req, res) {
         socket.sendNotificationDataToAll(signService.getSignModel(sign, false), "newSign");
         let signId = await signRepository.addSign(sign);
         await confirmedSignRepository.confirmSignById(signId);
+
+        let signsNumber = await signRepository.getNumberOfSignsByUserId(userId);
+        socket.sendNotificationData(signsNumber, userId, "signsNumber");
         sign.signId = signId;
         res.json({message: sign});
     } catch (err) {
@@ -110,12 +113,25 @@ async function editSign(req, res) {
     }
 }
 
+async function getSignsNumber(req, res) {
+    let userId = jwt.decode(req.headers.authorization).id;
+    try {
+        let number = await signRepository.getNumberOfSignsByUserId(userId);
+        res.json({message: number});
+    } catch (err) {
+        logger.log(err);
+        res.status(500);
+        res.json({message: "error"});
+    }
+}
+
 module.exports = function (app) {
     app.get('/getSigns', getSigns);
 
     app.use('/sign', authenticator.apiAuthenticateJWT);
     app.post('/sign/addSign', addSign);
     app.post('/sign/addInfo', additionalSignShipment);
+    app.get('/sign/getSignsNumber', getSignsNumber);
 
     app.use('/sign', authenticator.apiAuthenticateAdminJWT);
     app.post('/sign/confirmSign', confirmSign);
