@@ -84,11 +84,15 @@ async function editSign(req, res) {
     let name = req.body.name;
     let address = req.body.address;
     let confirmed = req.body.confirmed;
+    let lat = req.body.lat;
+    let lon = req.body.lon;
 
     try {
         let sign = await signRepository.getSignByUuidAndName(uuid, oldName);
         sign.name = name;
         sign.address = address;
+        sign.lat = lat;
+        sign.lon = lon;
         let confirmedOld = await confirmedSignRepository.isSignConfirmed(sign.id);
         if (!confirmedOld && confirmed) {
             await confirmedSignRepository.confirmSignById(sign.id);
