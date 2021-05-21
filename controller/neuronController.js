@@ -5,6 +5,7 @@ const fs = require('fs');
 const Sign = require("../model/Sign");
 const bodyParser = require('body-parser');
 const socket = require('../socket/socket');
+const signService = require('../service/signService');
 
 async function authenticator (req, res, next) {
     const token = req.headers.token;
@@ -70,7 +71,7 @@ async function sendPhotoInfo(req, res) {
                 console.log(bool);
                 if (!bool) {
                     let signModel = new Sign(sign.id, sign.lat, sign.lon, labels[i], sign.user_id, uuid, sign.address, sign.direction);
-                    socket.sendNotificationDataToAll(signModel, "newSign");
+                    socket.sendNotificationDataToAll(signService.getSignModel(signModel, true), "newSign");
                     let id = await signRepository.addSign(signModel);
                     await confirmedSignRepository.confirmSignById(id);
                 }
@@ -79,7 +80,7 @@ async function sendPhotoInfo(req, res) {
             let bool = await signRepository.isSignAlreadyDetected(sign.lat, sign.lon, uuid, labels);
             if (!bool) {
                 let signModel = new Sign(sign.id, sign.lat, sign.lon, labels, sign.user_id, uuid, sign.address, sign.direction);
-                socket.sendNotificationDataToAll(signModel, "newSign");
+                socket.sendNotificationDataToAll(signService.getSignModel(signModel, true), "newSign");
                 let id = await signRepository.addSign(signModel);
                 await confirmedSignRepository.confirmSignById(id);
             }

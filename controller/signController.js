@@ -29,7 +29,7 @@ async function addSign(req, res) {
     let uuid = req.body.uuid;
     try {
         let sign = new Sign(0, lat, lon, name, userId, uuid, address, 1);
-        socket.sendNotificationDataToAll(sign, "newSign");
+        socket.sendNotificationDataToAll(signService.getSignModel(sign, false), "newSign");
         let signId = await signRepository.addSign(sign);
         await confirmedSignRepository.confirmSignById(signId);
         sign.signId = signId;

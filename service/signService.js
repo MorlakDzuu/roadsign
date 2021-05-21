@@ -106,5 +106,6 @@ async function getSignsCluster(leftDown, leftUp, rightDown, rightUp, lat, lon, f
 
 module.exports = {
     addSign,
-    getSignsCluster
+    getSignsCluster,
+    getSignModel
 }
