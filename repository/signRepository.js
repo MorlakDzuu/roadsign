@@ -22,7 +22,6 @@ async function getSigns(leftDown, leftUp, rightDown, rightUp, lat, lon, filter) 
             queryArray.push(filter[i]);
         }
         query += ')';
-        console.log(query);
         let data = await database.db.manyOrNone(query, queryArray);
         return data;
     }
