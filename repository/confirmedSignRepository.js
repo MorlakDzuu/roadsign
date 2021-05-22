@@ -9,10 +9,23 @@ async function deleteSign(signId) {
 }
 
 async function getSigns(leftDown, leftUp, rightDown, rightUp, lat, lon, filter) {
-    let data = await database.db.manyOrNone('SELECT * FROM confirmed_signs INNER JOIN signs ON ' +
-        '(confirmed_signs.sign_id = signs.id) WHERE (signs.lat > $1) AND (signs.lat < $2) AND (signs.lon > $3) AND (signs.lon < $4)',
-        [leftDown.lat, rightUp.lat, leftDown.lon, rightUp.lon]);
-    return data;
+    let queryArray = [leftDown.lat, rightUp.lat, leftDown.lon, rightUp.lon];
+    let query = 'SELECT * FROM confirmed_signs INNER JOIN signs ON ' +
+        '(confirmed_signs.sign_id = signs.id) WHERE (signs.lat > $1) AND (signs.lat < $2) AND (signs.lon > $3) AND (signs.lon < $4)';
+    if (filter.length > 0) {
+        query += ' AND (';
+        for(let i = 0; i < filter.length; i++) {
+            query += '(signs.name = $' + (i+5) + ')';
+            if ((i + 1) != filter.length) {
+                query += ' OR ';
+            }
+            queryArray.push(filter[i]);
+        }
+        query += ')';
+        let data = await database.db.manyOrNone(query, queryArray);
+        return data;
+    }
+    return [];
 }
 
 async function getSignsCountByUserId(userId) {
