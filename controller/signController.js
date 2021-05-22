@@ -32,12 +32,10 @@ async function addSign(req, res) {
         let sign = new Sign(0, lat, lon, name, userId, uuid, address, 1);
         let signId = await signRepository.addSign(sign);
         let confirmed = false;
-        let user = userRepository.getUserById(userId);
-        console.log(user);
+        let user = await userRepository.getUserById(userId);
         if (user.role == 'admin') {
             await confirmedSignRepository.confirmSignById(signId);
             confirmed = true;
-            console.log(confirmed);
         }
         socket.sendNotificationDataToAll(signService.getSignModel(sign, confirmed), "newSign");
 
