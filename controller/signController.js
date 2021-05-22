@@ -30,13 +30,14 @@ async function addSign(req, res) {
     let uuid = req.body.uuid;
     try {
         let sign = new Sign(0, lat, lon, name, userId, uuid, address, 1);
-        socket.sendNotificationDataToAll(signService.getSignModel(sign, false), "newSign");
         let signId = await signRepository.addSign(sign);
-
+        let confirmed = false;
         let user = userRepository.getUserById(userId);
         if (user.role == 'admin') {
             await confirmedSignRepository.confirmSignById(signId);
+            confirmed = true;
         }
+        socket.sendNotificationDataToAll(signService.getSignModel(sign, confirmed), "newSign");
 
         let signsNumber = await signRepository.getNumberOfSignsByUserId(userId);
         socket.sendNotificationData({message: signsNumber}, userId, "signsNumber");
