@@ -4,6 +4,7 @@ const logger = require('../service/logService');
 const authenticator = require('./security/authenticator');
 const signService = require('../service/signService');
 const socket = require('../socket/socket');
+const userRepository = require('../repository/userRepository');
 
 const jwt = require('jsonwebtoken');
 const Sign = require("../model/Sign");
@@ -31,7 +32,11 @@ async function addSign(req, res) {
         let sign = new Sign(0, lat, lon, name, userId, uuid, address, 1);
         socket.sendNotificationDataToAll(signService.getSignModel(sign, false), "newSign");
         let signId = await signRepository.addSign(sign);
-        await confirmedSignRepository.confirmSignById(signId);
+
+        let user = userRepository.getUserById(userId);
+        if (user.role == 'admin') {
+            await confirmedSignRepository.confirmSignById(signId);
+        }
 
         let signsNumber = await signRepository.getNumberOfSignsByUserId(userId);
         socket.sendNotificationData({message: signsNumber}, userId, "signsNumber");
