@@ -9,10 +9,24 @@ async function addSign(sign) {
 }
 
 async function getSigns(leftDown, leftUp, rightDown, rightUp, lat, lon, filter) {
-    let data = await database.db.manyOrNone("SELECT * FROM signs WHERE (lat > $1) AND (lat < $2) AND (lon > $3) AND (lon < $4)" +
-        " AND (name != '') AND ((SELECT COUNT(*) FROM confirmed_signs WHERE confirmed_signs.sign_id = signs.id) = 0)",
-        [leftDown.lat, rightUp.lat, leftDown.lon, rightUp.lon]);
-    return data;
+    let query = "SELECT * FROM signs WHERE (lat > $1) AND (lat < $2) AND (lon > $3) AND (lon < $4)" +
+        " AND (name != '') AND ((SELECT COUNT(*) FROM confirmed_signs WHERE confirmed_signs.sign_id = signs.id) = 0)";
+    let queryArray = [leftDown.lat, rightUp.lat, leftDown.lon, rightUp.lon];
+    if (filter.length > 0) {
+        query += ' AND (';
+        for(let i = 0; i < filter.length; i++) {
+            query += '(name = $' + (i+5) + ')';
+            if ((i + 1) != filter.length) {
+                query += ' OR ';
+            }
+            queryArray.push(filter[i]);
+        }
+        query += ')';
+        console.log(query);
+        let data = await database.db.manyOrNone(query, queryArray);
+        return data;
+    }
+    return [];
 }
 
 async function addSignToQueue(signId) {
