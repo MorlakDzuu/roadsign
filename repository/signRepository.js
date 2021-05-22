@@ -10,7 +10,7 @@ async function addSign(sign) {
 
 async function getSigns(leftDown, leftUp, rightDown, rightUp, lat, lon, filter) {
     let data = await database.db.manyOrNone("SELECT * FROM signs WHERE (lat > $1) AND (lat < $2) AND (lon > $3) AND (lon < $4)" +
-        " AND (name != '')",
+        " AND (name != '') AND ((SELECT COUNT(*) FROM confirmed_signs WHERE confirmed_signs.sign_id = signs.id) = 0)",
         [leftDown.lat, rightUp.lat, leftDown.lon, rightUp.lon]);
     return data;
 }
