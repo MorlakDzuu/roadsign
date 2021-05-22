@@ -36,6 +36,7 @@ async function addSign(req, res) {
         if (user.role == 'admin') {
             await confirmedSignRepository.confirmSignById(signId);
             confirmed = true;
+            console.log(confirmed);
         }
         socket.sendNotificationDataToAll(signService.getSignModel(sign, confirmed), "newSign");
 
