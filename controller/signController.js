@@ -33,6 +33,7 @@ async function addSign(req, res) {
         let signId = await signRepository.addSign(sign);
         let confirmed = false;
         let user = userRepository.getUserById(userId);
+        console.log(user);
         if (user.role == 'admin') {
             await confirmedSignRepository.confirmSignById(signId);
             confirmed = true;
