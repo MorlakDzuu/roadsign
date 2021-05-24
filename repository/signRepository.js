@@ -62,7 +62,7 @@ async function getSignByUuidAndName(uuid, name) {
 }
 
 async function getNumberOfSignsByUserId(userId) {
-    const data = await database.db.one('SELECT COUNT(*) FROM signs WHERE user_id = $1', [userId]);
+    const data = await database.db.one("SELECT COUNT(*) FROM signs WHERE (user_id = $1) AND (name != '')", [userId]);
     return data.count;
 }
 
