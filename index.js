@@ -5,11 +5,12 @@ let http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 global.io = new Server(server);
+const gen = require('./database/generate');
 
 
 global.connections = []
 
-const port = 8080;
+const port = 3030;
 
 app.get('/', (req, res) => {
     console.log(__dirname + '/index.html');

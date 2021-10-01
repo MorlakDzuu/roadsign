@@ -2,7 +2,6 @@ const userRepository = require('../repository/userRepository');
 const logger = require('../service/logService');
 const authenticator = require('./security/authenticator');
 const confirmedSignRepository = require('../repository/confirmedSignRepository');
-const roadSnapService = require('../service/roadSnapService');
 
 const jwt = require('jsonwebtoken');
 
@@ -32,9 +31,6 @@ async function getProfile(req, res) {
             role: user.role,
             signsCount: signsCount
         });
-        //
-        await roadSnapService.makeGoogleApiRequest(55.708174, 37.748768);
-        //
         return
     } catch (err) {
         logger.log(err.message);

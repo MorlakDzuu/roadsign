@@ -193,11 +193,11 @@ const types = [
 
 async function generate() {
     try {
-        for (let i = 0; i < 5000; i++) {
+        for (let i = 0; i < 100; i++) {
             let lat = Math.random() * (55.913405 - 55.566060) + 55.566060;
             let lon = Math.random() * (37.851512 - 37.354691) + 37.354691
             let type = Math.floor(Math.random() * types.length);
-            let sign = new Sign(0, lat, lon, types[type], 12, uuidv4(), "test", 0);
+            let sign = new Sign(0, lat, lon, types[type], 3, uuidv4(), "test", 0);
             let signId = await signRepository.addSign(sign);
             if (Math.random() < 0.5) {
                 await confirmedSignRepository.confirmSignById(signId);
