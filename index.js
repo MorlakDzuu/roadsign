@@ -26,7 +26,7 @@ require('./controller/fileController')(app);
 require('./controller/signController')(app);
 
 server.listen(port, function() {
-    console.log('Skill change started on port ' + port);
+    console.log('Signs started on port ' + port);
 });
 
 require('./socket/socket').init();
