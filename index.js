@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 
 require('./controller/neuronController')(app);
 app.use(bodyParser.json());
-
+a
 require('./controller/security/authController')(app);
 require('./controller/userController')(app);
 require('./controller/fileController')(app);
